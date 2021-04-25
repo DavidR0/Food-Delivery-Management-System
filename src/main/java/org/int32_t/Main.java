@@ -1,7 +1,43 @@
 package org.int32_t;
 
-public class Main {
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.util.Objects;
+
+public class Main extends Application {
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+        //Admin window
+        Parent root = FXMLLoader.load(getClass().getResource("PresentationLayer/loginAdmin.fxml")); //Loads the UI
+        primaryStage.setTitle("Admin");
+        Scene scene = new Scene(root, 1123, 721);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+
+//        Client window
+        Stage secondStage = new Stage();
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("PresentationLayer/loginClient.fxml"))); //Loads the UI
+        secondStage.setTitle("Client");
+        scene = new Scene(root, 1123, 721);
+        secondStage.setScene(scene);
+        secondStage.show();
+
+        //employee window
+        Stage thirdStage = new Stage();
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("PresentationLayer/loginEmployee.fxml"))); //Loads the UI
+        thirdStage.setTitle("Employee");
+        scene = new Scene(root, 1123, 721);
+        thirdStage.setScene(scene);
+        thirdStage.show();
+
+    }
+
     public static void main(String[] args)  {
-        System.out.println("Hello World");
+        launch(args);
     }
 }
