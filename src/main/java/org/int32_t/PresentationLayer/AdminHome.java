@@ -1,9 +1,5 @@
 package org.int32_t.PresentationLayer;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;

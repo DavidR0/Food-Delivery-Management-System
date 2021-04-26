@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" prefHeight="721.0" prefWidth="1123.0" style="-fx-background-color: #E2D4B6; -fx-border-color: #9C9583; -fx-border-width: 7px; -fx-border-radius: 3px;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.int32_t.PresentationLayer.LoginAdminController">
+<?import javafx.scene.effect.Shadow?>
+<AnchorPane fx:id="rootPane" prefHeight="721.0" prefWidth="1123.0" style="-fx-background-color: #E2D4B6; -fx-border-color: #9C9583; -fx-border-width: 7px; -fx-border-radius: 3px;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.int32_t.PresentationLayer.LoginAdminController">
     <children>
         <AnchorPane layoutX="673.0" layoutY="82.0" prefHeight="558.0" prefWidth="361.0" style="-fx-background-color: #1F2c47;">
             <children>
@@ -34,9 +42,9 @@
                     <bumpInput>
                         <Shadow />
                     </bumpInput>
-<!--                    <light>-->
-<!--                        <Light.Distant />-->
-<!--                    </light>-->
+                    <!--               <light>-->
+                    <!--                  <Light.Distant />-->
+                    <!--               </light>-->
                 </Lighting>
             </effect>
         </ImageView>
