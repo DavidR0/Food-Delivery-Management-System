@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.int32_t.PresentationLayer.ClientHome">
+<AnchorPane fx:id="rootPane" prefHeight="721.0" prefWidth="1123.0" style="-fx-background-color: #1f2c47; -fx-border-color: #D4D700; -fx-border-radius: 3px; -fx-border-width: 2px;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.int32_t.PresentationLayer.ClientHome">
    <children>
-      <Label layoutX="89.0" layoutY="127.0" prefHeight="61.0" prefWidth="175.0" text="client home">
+      <Label layoutX="14.0" layoutY="14.0" prefHeight="61.0" prefWidth="175.0" text="client home" textFill="WHITE">
          <font>
             <Font size="31.0" />
          </font>
       </Label>
+      <JFXButton buttonType="RAISED" layoutX="1001.0" layoutY="646.0" onAction="#placedOrder" prefHeight="61.0" prefWidth="108.0" style="-fx-background-color: #ffffff;" text="Place Order" />
    </children>
 </AnchorPane>
