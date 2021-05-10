@@ -1,17 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" prefHeight="721.0" prefWidth="1123.0" style="-fx-background-color: #1f2c47; -fx-border-color: #D4D700; -fx-border-radius: 3px; -fx-border-width: 2px;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.int32_t.PresentationLayer.ClientHome">
+<StackPane fx:id="root" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.int32_t.PresentationLayer.ClientHome">
    <children>
-      <Label layoutX="14.0" layoutY="14.0" prefHeight="61.0" prefWidth="175.0" text="client home" textFill="WHITE">
-         <font>
-            <Font size="31.0" />
-         </font>
-      </Label>
-      <JFXButton buttonType="RAISED" layoutX="1001.0" layoutY="646.0" onAction="#placedOrder" prefHeight="61.0" prefWidth="108.0" style="-fx-background-color: #ffffff;" text="Place Order" />
+      <AnchorPane fx:id="rootPane" prefHeight="721.0" prefWidth="1123.0" style="-fx-background-color: #1f2c47; -fx-border-color: #D4D700; -fx-border-radius: 3px; -fx-border-width: 2px;">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" prefHeight="61.0" prefWidth="175.0" text="client home" textFill="WHITE">
+               <font>
+                  <Font size="31.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutX="14.0" layoutY="75.0" prefHeight="615.0" prefWidth="1093.0">
+               <children>
+                  <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="190.0" layoutY="46.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #1f2c47;" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <content>
+                        <VBox fx:id="productsList" prefHeight="613.0" prefWidth="1091.0" spacing="20.0" style="-fx-background-color: #1f2c47;">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </AnchorPane>
+            <JFXButton buttonType="RAISED" layoutX="1001.0" layoutY="646.0" onAction="#viewOrder" prefHeight="61.0" prefWidth="108.0" style="-fx-background-color: #ffffff;" text="View Order" />
+         </children>
+      </AnchorPane>
    </children>
-</AnchorPane>
+</StackPane>

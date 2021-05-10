@@ -1,15 +1,10 @@
 package org.int32_t.PresentationLayer;
 
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXScrollPane;
 import javafx.animation.FadeTransition;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -59,17 +54,16 @@ public class EmployeeHome implements PropertyChangeListener {
 
     private void updateView(){
         Map<Order, Collection<org.int32_t.BusinessLayer.MenuItem>> orders = new DeliveryService().getOrders();
-        List<MenuItem> itemOrdersList = new LinkedList<>();
+        List<MenuItemView> itemOrdersList = new LinkedList<>();
         //Update the view with the new changes
         for (Map.Entry<Order, Collection<org.int32_t.BusinessLayer.MenuItem>> entry : orders.entrySet()) {
             for(org.int32_t.BusinessLayer.MenuItem itm : entry.getValue()){
                 if(itm.isBase){ //Item is base product
                     BaseProduct base = (BaseProduct) itm;
-                    itemOrdersList.add(new MenuItem(entry.getKey(), base.getTitle()," ",String.valueOf(base.getRating()),String.valueOf(base.getCalories()),String.valueOf(base.getProtein()),String.valueOf(base.getFat()),String.valueOf(base.getSodium()),String.valueOf(base.getPrice()),true));
+                    itemOrdersList.add(new MenuItemView(null,entry.getKey(), base,true));
                 }else{ //Item is compound product
                     CompositeProduct comp = (CompositeProduct) itm;
-                    BaseProduct base = comp.getViewElement();
-                    itemOrdersList.add(new MenuItem(entry.getKey(), comp.getTitle(),base.getTitle(),String.valueOf(base.getRating()),String.valueOf(base.getCalories()),String.valueOf(base.getProtein()),String.valueOf(base.getFat()),String.valueOf(base.getSodium()),String.valueOf(base.getPrice()),true));
+                    itemOrdersList.add(new MenuItemView(null,entry.getKey(), comp.getViewElement(),true));
                 }
 
             }
