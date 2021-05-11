@@ -41,6 +41,7 @@
                </color>
             </DropShadow>
          </effect></JFXButton>
+      <Text fx:id="ClientID" layoutX="8.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Client ID" wrappingWidth="130.11328125" />
    </children>
    <effect>
       <DropShadow spread="0.47" />

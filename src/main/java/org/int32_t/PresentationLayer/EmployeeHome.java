@@ -9,10 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.int32_t.BusinessLayer.BaseProduct;
-import org.int32_t.BusinessLayer.CompositeProduct;
-import org.int32_t.BusinessLayer.DeliveryService;
-import org.int32_t.BusinessLayer.Order;
+import org.int32_t.BusinessLayer.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -20,6 +17,8 @@ import java.io.IOException;
 import java.util.*;
 
 public class EmployeeHome implements PropertyChangeListener {
+    private List<String> colors = new LinkedList<>();
+
     @FXML
     private AnchorPane rootPane;
 
@@ -28,6 +27,8 @@ public class EmployeeHome implements PropertyChangeListener {
 
     @FXML
     public void initialize(){
+        colors.add("#F1FAEE");
+        colors.add("#A8DADC");
         //Subscribe to order events
         DeliveryService devS = new DeliveryService();
         devS.subscribeListener(this);
@@ -53,19 +54,27 @@ public class EmployeeHome implements PropertyChangeListener {
     }
 
     private void updateView(){
-        Map<Order, Collection<org.int32_t.BusinessLayer.MenuItem>> orders = new DeliveryService().getOrders();
+        Map<Order, Collection<MenuItem>> orders = new DeliveryService().getOrders();
         List<MenuItemView> itemOrdersList = new LinkedList<>();
+        int poz = 0;
         //Update the view with the new changes
-        for (Map.Entry<Order, Collection<org.int32_t.BusinessLayer.MenuItem>> entry : orders.entrySet()) {
-            for(org.int32_t.BusinessLayer.MenuItem itm : entry.getValue()){
+        for (Map.Entry<Order, Collection<MenuItem>> entry : orders.entrySet()) {
+            //Select a random Color for each order
+            String color = colors.get(poz%2);
+            poz++;
+
+            for(MenuItem itm : entry.getValue()){
                 if(itm.isBase){ //Item is base product
                     BaseProduct base = (BaseProduct) itm;
-                    itemOrdersList.add(new MenuItemView(null,entry.getKey(), base,true));
+                    MenuItemView panel = new MenuItemView(null,entry.getKey(),null,null, base,true);
+                    panel.setStyle("-fx-background-color: " + color + ";");
+                    itemOrdersList.add(panel);
                 }else{ //Item is compound product
                     CompositeProduct comp = (CompositeProduct) itm;
-                    itemOrdersList.add(new MenuItemView(null,entry.getKey(), comp.getViewElement(),true));
+                    MenuItemView panel = new MenuItemView(null,entry.getKey(),null, null,comp.getViewElement(),true);
+                    panel.setStyle("-fx-background-color: " + color + ";");
+                    itemOrdersList.add(panel);
                 }
-
             }
         }
         ordersList.getChildren().setAll(itemOrdersList);

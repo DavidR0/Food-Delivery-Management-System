@@ -7,15 +7,19 @@ import java.util.*;
 public class DeliveryService implements IDeliveryServiceProcessing{
     static Map<Order, Collection<MenuItem>> orders = new HashMap<>();
     static Map<Order, Collection<MenuItem>> completedOrders = new HashMap<>();
-    static Collection<MenuItem> menuItems = new LinkedList<>();
+    static List<MenuItem> menuItems = new LinkedList<>();
     static List<PropertyChangeListener> listeners = new ArrayList<>();
 
-    int currentOrder = 0;
+    static private int currentOrder = 0;
 
     @Override
     public void createOrder(Collection<MenuItem> items, int clientId) {
         Order order = new Order(currentOrder,clientId,new Date());
-        orders.put(order,items);
+        Collection<MenuItem> buff = new LinkedList<MenuItem>(items);
+
+        orders.put(order,buff);
+        currentOrder++;
+
         notifyListeners(items);
     }
 
@@ -40,14 +44,20 @@ public class DeliveryService implements IDeliveryServiceProcessing{
     }
 
     public static List<MenuItem> getMenu(){
-        List<MenuItem> list = new LinkedList<>();
-        list.add(new BaseProduct(12,12,13,2,5,10,"Test1"));
-        list.add(new BaseProduct(12,12,13,2,5,10,"Test5"));
-        list.add(new BaseProduct(12,12,13,2,5,10,"Test6"));
-        list.add(new BaseProduct(1,2,13,2,5,10,"Test2"));
-        list.add(new BaseProduct(3,12,13,2,5,10,"Test3"));
-        CompositeProduct item = new CompositeProduct(list,"Comp 1");
-        list.add(item);
-        return list;
+        menuItems.add(new BaseProduct(12,12,13,2,5,10,"Test1"));
+        menuItems.add(new BaseProduct(12,12,13,2,5,10,"Test2"));
+        menuItems.add(new BaseProduct(12,12,13,2,5,10,"Test3"));
+        menuItems.add(new BaseProduct(1,2,13,2,5,10,"Test4"));
+        menuItems.add(new BaseProduct(3,12,13,2,5,10,"Test5"));
+        menuItems.add(new BaseProduct(3,12,13,2,5,10,"Test6"));
+        menuItems.add(new BaseProduct(3,12,13,2,5,10,"Test7"));
+        menuItems.add(new BaseProduct(3,12,13,2,5,10,"Test8"));
+        menuItems.add(new BaseProduct(3,12,13,2,5,10,"Test9"));
+        menuItems.add(new BaseProduct(3,12,13,2,5,10,"Test10"));
+        menuItems.add(new BaseProduct(3,12,13,2,5,10,"Test11"));
+        menuItems.add(new BaseProduct(3,12,13,2,5,10,"Test12"));
+        CompositeProduct item = new CompositeProduct((List<MenuItem>) menuItems,"Comp 1");
+        menuItems.add(item);
+        return menuItems;
     }
 }

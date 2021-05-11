@@ -12,10 +12,10 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         //Admin window
         Parent root = FXMLLoader.load(getClass().getResource("PresentationLayer/loginAdmin.fxml")); //Loads the UI
-        primaryStage.setTitle("Admin");
+//        primaryStage.setTitle("Admin");
         Scene scene = new Scene(root, 1123, 721);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+//        primaryStage.setScene(scene);
+//        primaryStage.show();
 
 
 //        Client window
@@ -25,6 +25,14 @@ public class Main extends Application {
         scene = new Scene(root, 1123, 721);
         secondStage.setScene(scene);
         secondStage.show();
+
+        //second Client window
+//        Stage secondStage2 = new Stage();
+//        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("PresentationLayer/loginClient.fxml"))); //Loads the UI
+//        secondStage2.setTitle("Client 2");
+//        scene = new Scene(root, 1123, 721);
+//        secondStage2.setScene(scene);
+//        secondStage2.show();
 
         //employee window
         Stage thirdStage = new Stage();

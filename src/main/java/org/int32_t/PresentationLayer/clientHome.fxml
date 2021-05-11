@@ -18,7 +18,7 @@
                   <Font size="31.0" />
                </font>
             </Label>
-            <AnchorPane layoutX="14.0" layoutY="75.0" prefHeight="615.0" prefWidth="1093.0">
+            <AnchorPane layoutX="14.0" layoutY="75.0" prefHeight="569.0" prefWidth="1093.0">
                <children>
                   <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="190.0" layoutY="46.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #1f2c47;" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <content>
@@ -32,6 +32,9 @@
                </children>
             </AnchorPane>
             <JFXButton buttonType="RAISED" layoutX="1001.0" layoutY="646.0" onAction="#viewOrder" prefHeight="61.0" prefWidth="108.0" style="-fx-background-color: #ffffff;" text="View Order" />
+            <JFXButton buttonType="RAISED" layoutX="14.0" layoutY="646.0" onAction="#logout" prefHeight="61.0" prefWidth="108.0" style="-fx-background-color: #ffffff;" text="LogOut" />
+            <JFXButton buttonType="RAISED" layoutX="372.0" layoutY="657.0" onAction="#previousPage" prefHeight="40.0" prefWidth="108.0" style="-fx-background-color: #ffffff;" text="Previous" />
+            <JFXButton buttonType="RAISED" layoutX="687.0" layoutY="657.0" onAction="#nextPage" prefHeight="40.0" prefWidth="108.0" style="-fx-background-color: #ffffff;" text="Next" />
          </children>
       </AnchorPane>
    </children>

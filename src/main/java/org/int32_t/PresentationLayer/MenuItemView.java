@@ -7,8 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import org.int32_t.BusinessLayer.*;
-
 import java.io.IOException;
+import java.util.Collection;
 
 public class MenuItemView extends AnchorPane {
 
@@ -20,6 +20,9 @@ public class MenuItemView extends AnchorPane {
 
     @FXML
     private Text Rating;
+
+    @FXML
+    private Text ClientID;
 
     @FXML
     private Text Calories;
@@ -43,8 +46,10 @@ public class MenuItemView extends AnchorPane {
     private boolean isOrder;
     private ClientHome currentClient;
     private MenuItem item;
+    private Collection<MenuItem> cartList;
+    private FinalizeOrderDialog diag;
 
-    public MenuItemView(ClientHome currentClient, Order orderKey, MenuItem item, Boolean isOrder){
+    public MenuItemView(ClientHome currentClient, Order orderKey, Collection<MenuItem> cartList, FinalizeOrderDialog diag,MenuItem item, Boolean isOrder) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../PresentationLayer/menuItem.fxml"));
         loader.setRoot(this);
         loader.setController(this);
@@ -55,20 +60,30 @@ public class MenuItemView extends AnchorPane {
             throw new RuntimeException(exception);
         }
 
-        if(isOrder){
+        //Set the button text according to the context it is used in
+        if (isOrder && cartList == null) {
             orderBTN.setText("Finish Order");
-        }else{
+        } else if (!isOrder) {
             orderBTN.setText("Add");
+        } else {
+            orderBTN.setText("Remove");
+        }
+
+        if(orderKey != null){ //Set the client ID Text
+            ClientID.setText("Client ID: " +orderKey.getClientID());
+        }else{
+            ClientID.setText("");
         }
 
         BaseProduct base;
-        if(item.isBase){ //Item is base product
+        if (item.isBase) { //Item is base product
             base = (BaseProduct) item;
 
-        }else{ //Item is compound product
-            base = ((CompositeProduct)item).getViewElement();
+        } else { //Item is compound product
+            base = ((CompositeProduct) item).getViewElement();
         }
 
+        //Set the objects text
         this.title.setText(base.getTitle());
         Rating.setText("Rating " + String.valueOf(base.getRating()));
         Calories.setText("Calories " + String.valueOf(base.getCalories()));
@@ -81,14 +96,21 @@ public class MenuItemView extends AnchorPane {
         this.isOrder = isOrder;
         this.currentClient = currentClient;
         this.item = item;
+        this.cartList = cartList;
+        this.diag = diag;
     }
 
     @FXML
     void removeOrder(ActionEvent event) {
-        if(isOrder){
+        if(cartList != null){
+            //Remove from client shopping cart
+            cartList.remove(item);
+            diag.updateView(cartList);
+        }else if(isOrder){
+            //Let the employee complete the order
             new DeliveryService().removeOrder(orderKey);
         }else{
-            //Add to client order
+            //Add to client shopping cart
             currentClient.addItem(item);
         }
     }
