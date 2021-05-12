@@ -120,8 +120,4 @@ public class EmployeeHome implements PropertyChangeListener {
         thisStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../PresentationLayer/loginEmployee.fxml")), 1123, 721));
     }
 
-    @FXML
-    void filterItems(ActionEvent event) {
-
-    }
 }

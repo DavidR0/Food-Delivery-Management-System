@@ -1,5 +1,6 @@
 package org.int32_t.BusinessLayer;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class CompositeProduct extends MenuItem{
@@ -61,9 +62,10 @@ public class CompositeProduct extends MenuItem{
                 sodium += base.getSodium();
                 price += base.computePrice();
                 title += base.getTitle() + " ";
+                rating += base.getRating();
             }
-
         }
+        rating = rating/items.size();
 
         return new BaseProduct(rating,calories,protein,fat,sodium,price,title);
     }

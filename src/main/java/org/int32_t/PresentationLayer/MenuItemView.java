@@ -8,6 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import org.int32_t.BusinessLayer.*;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Collection;
 
 public class MenuItemView extends AnchorPane {
@@ -85,7 +86,9 @@ public class MenuItemView extends AnchorPane {
 
         //Set the objects text
         this.title.setText(base.getTitle());
-        Rating.setText("Rating " + String.valueOf(base.getRating()));
+        DecimalFormat numberFormat = new DecimalFormat("#.00");
+
+        Rating.setText("Rating " + numberFormat.format(base.getRating()));
         Calories.setText("Calories " + String.valueOf(base.getCalories()));
         Protein.setText("Protein " + String.valueOf(base.getProtein()));
         Fat.setText("Fat " + String.valueOf(base.getFat()));

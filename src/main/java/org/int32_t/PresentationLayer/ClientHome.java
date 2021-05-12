@@ -15,10 +15,7 @@ import javafx.util.Duration;
 import org.int32_t.BusinessLayer.*;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -154,8 +151,13 @@ public class ClientHome {
     public void filterItems(ActionEvent actionEvent) {
         Predicate<MenuItem> priceFilter = n -> (this.price.getText().isEmpty() || n.getPrice() <= Integer.parseInt(this.price.getText()));
         Predicate<MenuItem> fatFilter = n -> (this.fats.getText().isEmpty() || n.getFat() <= Integer.parseInt(this.fats.getText()));
+        Predicate<MenuItem> sodiumFilter = n -> (this.sodium.getText().isEmpty() || n.getSodium() <= Integer.parseInt(this.sodium.getText()));
+        Predicate<MenuItem> ratingFilter = n -> (this.rating.getText().isEmpty() || n.getRating() <= Float.parseFloat(this.rating.getText()));
+        Predicate<MenuItem> nrCaloriesFilter = n -> (this.nrCalories.getText().isEmpty() || n.getCalories() <= Integer.parseInt(this.nrCalories.getText()));
+        Predicate<MenuItem> proteinsFilter = n -> (this.proteins.getText().isEmpty() || n.getProtein() <= Integer.parseInt(this.proteins.getText()));
+        Predicate<MenuItem> keywordFilter = n -> (this.keyword.getText().isEmpty() || n.getTitle().toLowerCase().contains(this.keyword.getText().toLowerCase()));
 
-        filterItemsList = itemsList.stream().filter(priceFilter).filter(fatFilter).collect(Collectors.toList());
+        filterItemsList = itemsList.stream().filter(priceFilter).filter(fatFilter).filter(keywordFilter).filter(sodiumFilter).filter(ratingFilter).filter(nrCaloriesFilter).filter(proteinsFilter).collect(Collectors.toList());
         pageMultiplier = 0;
         updateView(filterItemsList);
     }
