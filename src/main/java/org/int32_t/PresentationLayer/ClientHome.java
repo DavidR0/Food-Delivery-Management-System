@@ -1,6 +1,7 @@
 package org.int32_t.PresentationLayer;
 
 import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXTextField;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,6 +19,8 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import static java.lang.Math.abs;
 
@@ -31,41 +34,65 @@ public class ClientHome {
     @FXML
     private StackPane root;
 
+
+    @FXML
+    private JFXTextField keyword;
+
+    @FXML
+    private JFXTextField rating;
+
+    @FXML
+    private JFXTextField nrCalories;
+
+    @FXML
+    private JFXTextField proteins;
+
+    @FXML
+    private JFXTextField fats;
+
+    @FXML
+    private JFXTextField sodium;
+
+    @FXML
+    private JFXTextField price;
+
     private Collection<MenuItem> currentOrder = new LinkedList<>();
     private List<MenuItem> itemsList = new LinkedList<>();
+    private List<MenuItem> filterItemsList = new LinkedList<>();
     private int clientID = abs(new Random().nextInt());
     int pageMultiplier = 0;
     int nrElementsPerPage = 10;
 
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         itemsList.clear();
-        itemsList = DeliveryService.getMenu();
+        filterItemsList.clear();
+        filterItemsList = itemsList = DeliveryService.getMenu();
         updateView(itemsList);
         rootPane.setOpacity(0);
         fadeIn();
     }
 
-    private void updateView(List<MenuItem> orders){
+    private void updateView(List<MenuItem> orders) {
 
-        List<MenuItemView> filterItemsList = new LinkedList<>();
+        List<MenuItemView> filterItemsListView = new LinkedList<>();
         //Update the view with the new changes
-        for (int i = pageMultiplier*nrElementsPerPage ; i < (pageMultiplier + 1)*nrElementsPerPage && i < itemsList.size(); ++i) {
+        for (int i = pageMultiplier * nrElementsPerPage; i < (pageMultiplier + 1) * nrElementsPerPage && i < orders.size(); ++i) {
             MenuItem entry = orders.get(i);
-                if(entry.isBase){ //Item is base product
-                    BaseProduct base = (BaseProduct) entry;
-                    filterItemsList.add(new MenuItemView(this,null,null,null, base,false));
-                }else{ //Item is compound product
-                    CompositeProduct comp = (CompositeProduct) entry;
-                    BaseProduct base = comp.getViewElement();
-                    filterItemsList.add(new MenuItemView(this,null,null, null,base,false));
-                }
+            if (entry.isBase) { //Item is base product
+                BaseProduct base = (BaseProduct) entry;
+                filterItemsListView.add(new MenuItemView(this, null, null, null, base, false));
+            } else { //Item is compound product
+                CompositeProduct comp = (CompositeProduct) entry;
+                BaseProduct base = comp.getViewElement();
+                filterItemsListView.add(new MenuItemView(this, null, null, null, base, false));
+            }
         }
-        productsList.getChildren().setAll(filterItemsList);
+        productsList.getChildren().setAll(filterItemsListView);
     }
 
-    private void fadeIn(){
+    private void fadeIn() {
         FadeTransition fadeTransition = new FadeTransition();
         fadeTransition.setDuration(Duration.millis(1000));
         fadeTransition.setNode(rootPane);
@@ -74,13 +101,13 @@ public class ClientHome {
         fadeTransition.play();
     }
 
-    public void addItem(MenuItem itm){
+    public void addItem(MenuItem itm) {
         currentOrder.add(itm);
     }
 
     @FXML
     void viewOrder(ActionEvent event) {
-        FinalizeOrderDialog diag = new FinalizeOrderDialog(currentOrder,clientID);
+        FinalizeOrderDialog diag = new FinalizeOrderDialog(currentOrder, clientID);
         JFXDialog dialog = new JFXDialog(root, diag, JFXDialog.DialogTransition.CENTER);
         dialog.show();
         diag.setDiag(dialog);
@@ -115,19 +142,27 @@ public class ClientHome {
 
     @FXML
     void nextPage(ActionEvent event) {
-        if(pageMultiplier*(nrElementsPerPage-1) < itemsList.size()) {
+        if (pageMultiplier * (nrElementsPerPage - 1) < itemsList.size()) {
             pageMultiplier++;
-            updateView(itemsList);
+            updateView(filterItemsList);
         }
     }
 
     @FXML
     void previousPage(ActionEvent event) {
-        if(pageMultiplier >= 1){
+        if (pageMultiplier >= 1) {
             pageMultiplier--;
-            updateView(itemsList);
+            updateView(filterItemsList);
         }
     }
 
+    @FXML
+    public void filterItems(ActionEvent actionEvent) {
+        Predicate<MenuItem> price = n -> (this.price.getText().isEmpty() || n.getPrice() <= Integer.parseInt(this.price.getText()));
+        Predicate<MenuItem> fats = n -> (this.fats.getText().isEmpty()  || n.getFat() <= Integer.parseInt(this.fats.getText()));
 
+        filterItemsList = itemsList.stream().filter(price).collect(Collectors.toList());
+        pageMultiplier = 0;
+        updateView(filterItemsList);
+    }
 }

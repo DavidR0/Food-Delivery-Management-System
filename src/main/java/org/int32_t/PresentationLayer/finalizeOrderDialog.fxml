@@ -32,6 +32,11 @@
                 </AnchorPane>
                 <JFXButton buttonType="RAISED" layoutX="1001.0" layoutY="646.0" onAction="#createOrder" prefHeight="61.0" prefWidth="108.0" style="-fx-background-color: #ffffff;" text="Confirm" />
             <JFXButton buttonType="RAISED" layoutX="14.0" layoutY="646.0" onAction="#close" prefHeight="61.0" prefWidth="108.0" style="-fx-background-color: #ffffff;" text="Close" />
+            <Label fx:id="OrderTotalText" layoutX="419.0" layoutY="646.0" prefHeight="61.0" prefWidth="285.0" text="Order Total: 00000$" textFill="WHITE">
+               <font>
+                  <Font size="31.0" />
+               </font>
+            </Label>
             </children>
         </AnchorPane>
     </children>

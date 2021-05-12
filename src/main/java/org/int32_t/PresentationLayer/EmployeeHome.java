@@ -1,5 +1,6 @@
 package org.int32_t.PresentationLayer;
 
+import com.jfoenix.controls.JFXTextField;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,6 +25,28 @@ public class EmployeeHome implements PropertyChangeListener {
 
     @FXML
     private VBox ordersList;
+
+    @FXML
+    private JFXTextField keyword;
+
+    @FXML
+    private JFXTextField rating;
+
+    @FXML
+    private JFXTextField nrCalories;
+
+    @FXML
+    private JFXTextField proteins;
+
+    @FXML
+    private JFXTextField fats;
+
+    @FXML
+    private JFXTextField sodium;
+
+    @FXML
+    private JFXTextField price;
+
 
     @FXML
     public void initialize(){
@@ -102,5 +125,10 @@ public class EmployeeHome implements PropertyChangeListener {
     private void loadSignIn() throws IOException {
         Stage thisStage = (Stage) rootPane.getScene().getWindow();
         thisStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../PresentationLayer/loginEmployee.fxml")), 1123, 721));
+    }
+
+    @FXML
+    void filterItems(ActionEvent event) {
+
     }
 }

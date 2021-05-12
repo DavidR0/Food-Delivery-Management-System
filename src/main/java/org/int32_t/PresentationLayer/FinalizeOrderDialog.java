@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXDialog;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.int32_t.BusinessLayer.BaseProduct;
@@ -24,6 +25,8 @@ public class FinalizeOrderDialog extends AnchorPane {
 
     @FXML
     private VBox ordersList;
+    @FXML
+    private Label OrderTotalText;
 
     public FinalizeOrderDialog(Collection<MenuItem> list, int clientID) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../PresentationLayer/finalizeOrderDialog.fxml"));
@@ -41,6 +44,7 @@ public class FinalizeOrderDialog extends AnchorPane {
 
         this.clientID = clientID;
         this.list = list;
+
     }
 
     public void setDiag(JFXDialog d){
@@ -48,20 +52,23 @@ public class FinalizeOrderDialog extends AnchorPane {
     }
 
     public void updateView(Collection<MenuItem> orders){
-
+        int totalPrice = 0;
         List<MenuItemView> itemOrdersList = new LinkedList<>();
         //Update the view with the new changes
         for (MenuItem entry : orders) {
             if(entry.isBase){ //Item is base product
                 BaseProduct base = (BaseProduct) entry;
+                totalPrice += base.computePrice();
                 itemOrdersList.add(new MenuItemView(null,null,orders, this, base,true));
             }else{ //Item is compound product
                 CompositeProduct comp = (CompositeProduct) entry;
                 BaseProduct base = comp.getViewElement();
+                totalPrice += base.computePrice();
                 itemOrdersList.add(new MenuItemView(null,null,orders, this ,base,true));
             }
         }
         ordersList.getChildren().setAll(itemOrdersList);
+        OrderTotalText.setText("Order Total: $" + totalPrice);
     }
 
     @FXML

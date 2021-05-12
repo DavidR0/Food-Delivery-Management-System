@@ -10,6 +10,20 @@ public class CompositeProduct extends MenuItem{
         this.items = items;
         super.isBase = false;
         this.title = title;
+        setComputedPrice();
+    }
+
+    private void setComputedPrice(){
+        int price = 0;
+
+        for(MenuItem prd : items){
+            if(prd.isBase) {
+                BaseProduct base = (BaseProduct) prd;
+                price += base.computePrice();
+            }
+        }
+
+        this.price = price;
     }
 
     public List<MenuItem> getItems() {
@@ -18,6 +32,7 @@ public class CompositeProduct extends MenuItem{
 
     public void setItems(List<MenuItem> items) {
         this.items = items;
+        setComputedPrice();
     }
 
     public String getTitle() {
@@ -44,7 +59,7 @@ public class CompositeProduct extends MenuItem{
                 protein += base.getProtein();
                 fat += base.getFat();
                 sodium += base.getSodium();
-                price += base.getPrice();
+                price += base.computePrice();
                 title += base.getTitle() + " ";
             }
 

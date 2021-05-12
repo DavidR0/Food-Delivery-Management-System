@@ -2,10 +2,10 @@ org/int32_t/PresentationLayer/CreateAccountClient.java
  org.int32_t.PresentationLayer.CreateAccountClient
 org/int32_t/PresentationLayer/LoginEmployeeController.java
  org.int32_t.PresentationLayer.LoginEmployeeController
-org/int32_t/BusinessLayer/CompositeProduct.java
- org.int32_t.BusinessLayer.CompositeProduct
-org/int32_t/BusinessLayer/BaseProduct.java
- org.int32_t.BusinessLayer.BaseProduct
+org/int32_t/PresentationLayer/LoginClientController.java
+ org.int32_t.PresentationLayer.LoginClientController
+org/int32_t/BusinessLayer/Order.java
+ org.int32_t.BusinessLayer.Order
 org/int32_t/PresentationLayer/LoginAdminController.java
  org.int32_t.PresentationLayer.LoginAdminController
 org/int32_t/BusinessLayer/IDeliveryServiceProcessing.java
@@ -16,19 +16,19 @@ org/int32_t/PresentationLayer/CreateAccountManagement.java
  org.int32_t.PresentationLayer.CreateAccountManagement
 org/int32_t/Main.java
  org.int32_t.Main
-org/int32_t/BusinessLayer/Order.java
- org.int32_t.BusinessLayer.Order
-org/int32_t/PresentationLayer/LoginClientController.java
- org.int32_t.PresentationLayer.LoginClientController
 org/int32_t/BusinessLayer/MenuItem.java
  org.int32_t.BusinessLayer.MenuItem
+org/int32_t/BusinessLayer/BaseProduct.java
+ org.int32_t.BusinessLayer.BaseProduct
 org/int32_t/BusinessLayer/DeliveryService.java
  org.int32_t.BusinessLayer.DeliveryService
-org/int32_t/PresentationLayer/EmployeeHome.java
- org.int32_t.PresentationLayer.EmployeeHome
-org/int32_t/PresentationLayer/FinalizeOrderDialog.java
- org.int32_t.PresentationLayer.FinalizeOrderDialog
 org/int32_t/PresentationLayer/ClientHome.java
  org.int32_t.PresentationLayer.ClientHome
 org/int32_t/PresentationLayer/MenuItemView.java
  org.int32_t.PresentationLayer.MenuItemView
+org/int32_t/PresentationLayer/FinalizeOrderDialog.java
+ org.int32_t.PresentationLayer.FinalizeOrderDialog
+org/int32_t/BusinessLayer/CompositeProduct.java
+ org.int32_t.BusinessLayer.CompositeProduct
+org/int32_t/PresentationLayer/EmployeeHome.java
+ org.int32_t.PresentationLayer.EmployeeHome
