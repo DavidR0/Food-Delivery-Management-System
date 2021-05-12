@@ -80,14 +80,8 @@ public class ClientHome {
         //Update the view with the new changes
         for (int i = pageMultiplier * nrElementsPerPage; i < (pageMultiplier + 1) * nrElementsPerPage && i < orders.size(); ++i) {
             MenuItem entry = orders.get(i);
-            if (entry.isBase) { //Item is base product
-                BaseProduct base = (BaseProduct) entry;
-                filterItemsListView.add(new MenuItemView(this, null, null, null, base, false));
-            } else { //Item is compound product
-                CompositeProduct comp = (CompositeProduct) entry;
-                BaseProduct base = comp.getViewElement();
-                filterItemsListView.add(new MenuItemView(this, null, null, null, base, false));
-            }
+            BaseProduct base = (BaseProduct) entry;
+            filterItemsListView.add(new MenuItemView(this, null, null, null, base, false));
         }
         productsList.getChildren().setAll(filterItemsListView);
     }
@@ -158,10 +152,10 @@ public class ClientHome {
 
     @FXML
     public void filterItems(ActionEvent actionEvent) {
-        Predicate<MenuItem> price = n -> (this.price.getText().isEmpty() || n.getPrice() <= Integer.parseInt(this.price.getText()));
-        Predicate<MenuItem> fats = n -> (this.fats.getText().isEmpty()  || n.getFat() <= Integer.parseInt(this.fats.getText()));
+        Predicate<MenuItem> priceFilter = n -> (this.price.getText().isEmpty() || n.getPrice() <= Integer.parseInt(this.price.getText()));
+        Predicate<MenuItem> fatFilter = n -> (this.fats.getText().isEmpty() || n.getFat() <= Integer.parseInt(this.fats.getText()));
 
-        filterItemsList = itemsList.stream().filter(price).collect(Collectors.toList());
+        filterItemsList = itemsList.stream().filter(priceFilter).filter(fatFilter).collect(Collectors.toList());
         pageMultiplier = 0;
         updateView(filterItemsList);
     }

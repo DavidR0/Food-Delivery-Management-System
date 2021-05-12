@@ -8,7 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.int32_t.BusinessLayer.BaseProduct;
-import org.int32_t.BusinessLayer.CompositeProduct;
 import org.int32_t.BusinessLayer.DeliveryService;
 import org.int32_t.BusinessLayer.MenuItem;
 
@@ -56,16 +55,9 @@ public class FinalizeOrderDialog extends AnchorPane {
         List<MenuItemView> itemOrdersList = new LinkedList<>();
         //Update the view with the new changes
         for (MenuItem entry : orders) {
-            if(entry.isBase){ //Item is base product
-                BaseProduct base = (BaseProduct) entry;
-                totalPrice += base.computePrice();
-                itemOrdersList.add(new MenuItemView(null,null,orders, this, base,true));
-            }else{ //Item is compound product
-                CompositeProduct comp = (CompositeProduct) entry;
-                BaseProduct base = comp.getViewElement();
-                totalPrice += base.computePrice();
-                itemOrdersList.add(new MenuItemView(null,null,orders, this ,base,true));
-            }
+            BaseProduct base = (BaseProduct) entry;
+            totalPrice += base.computePrice();
+            itemOrdersList.add(new MenuItemView(null,null,orders, this, base,true));
         }
         ordersList.getChildren().setAll(itemOrdersList);
         OrderTotalText.setText("Order Total: $" + totalPrice);
@@ -73,7 +65,9 @@ public class FinalizeOrderDialog extends AnchorPane {
 
     @FXML
     void createOrder(ActionEvent event) {
-        new DeliveryService().createOrder(list, clientID);
+        if(!list.isEmpty()) {
+            new DeliveryService().createOrder(list, clientID);
+        }
         list.clear();
         diag.close();
     }

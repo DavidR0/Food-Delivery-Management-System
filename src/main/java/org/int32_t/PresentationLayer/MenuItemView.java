@@ -80,7 +80,7 @@ public class MenuItemView extends AnchorPane {
             base = (BaseProduct) item;
 
         } else { //Item is compound product
-            base = ((CompositeProduct) item).getViewElement();
+            base = ((CompositeProduct) item).convertToBase();
         }
 
         //Set the objects text

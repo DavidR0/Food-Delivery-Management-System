@@ -43,7 +43,7 @@ public class CompositeProduct extends MenuItem{
         this.title = title;
     }
 
-    public BaseProduct getViewElement(){
+    public BaseProduct convertToBase(){
         int calories = 0;
         float rating = 0;
         int protein = 0;

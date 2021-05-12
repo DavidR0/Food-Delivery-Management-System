@@ -87,17 +87,10 @@ public class EmployeeHome implements PropertyChangeListener {
             poz++;
 
             for(MenuItem itm : entry.getValue()){
-                if(itm.isBase){ //Item is base product
-                    BaseProduct base = (BaseProduct) itm;
-                    MenuItemView panel = new MenuItemView(null,entry.getKey(),null,null, base,true);
-                    panel.setStyle("-fx-background-color: " + color + ";");
-                    itemOrdersList.add(panel);
-                }else{ //Item is compound product
-                    CompositeProduct comp = (CompositeProduct) itm;
-                    MenuItemView panel = new MenuItemView(null,entry.getKey(),null, null,comp.getViewElement(),true);
-                    panel.setStyle("-fx-background-color: " + color + ";");
-                    itemOrdersList.add(panel);
-                }
+                BaseProduct base = (BaseProduct) itm;
+                MenuItemView panel = new MenuItemView(null,entry.getKey(),null,null, base,true);
+                panel.setStyle("-fx-background-color: " + color + ";");
+                itemOrdersList.add(panel);
             }
         }
         ordersList.getChildren().setAll(itemOrdersList);

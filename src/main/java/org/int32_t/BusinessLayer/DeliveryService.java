@@ -58,6 +58,13 @@ public class DeliveryService implements IDeliveryServiceProcessing{
         menuItems.add(new BaseProduct(3,12,13,2,5,10,"Test12"));
         CompositeProduct item = new CompositeProduct((List<MenuItem>) menuItems,"Comp 1");
         menuItems.add(item);
+
+        for(int i = 0; i < menuItems.size();++i){
+            if(!menuItems.get(i).isBase){
+                menuItems.set(i,((CompositeProduct)menuItems.get(i)).convertToBase());
+            }
+        }
+
         return menuItems;
     }
 }
