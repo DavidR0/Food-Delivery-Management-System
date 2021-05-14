@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<fx:root type="AnchorPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane layoutY="-7.0" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <JFXTextField fx:id="title" labelFloat="true" layoutX="403.0" layoutY="24.0" promptText="Title" />
+            <JFXTextField fx:id="rating" labelFloat="true" layoutX="403.0" layoutY="75.0" promptText="Rating" />
+            <JFXTextField fx:id="calories" labelFloat="true" layoutX="403.0" layoutY="134.0" promptText="Calories" />
+            <JFXTextField fx:id="protein" labelFloat="true" layoutX="403.0" layoutY="301.0" promptText="Protein" />
+            <JFXTextField fx:id="fat" labelFloat="true" layoutX="403.0" layoutY="251.0" promptText="Fat" />
+            <JFXTextField fx:id="sodium" labelFloat="true" layoutX="403.0" layoutY="192.0" promptText="Sodium" />
+            <JFXButton layoutX="43.0" layoutY="284.0" onAction="#AddItem" prefHeight="83.0" prefWidth="105.0" style="-fx-background-color: #1f2c47;" text="Add Item" textFill="WHITE" />
+            <JFXTextField fx:id="price" labelFloat="true" layoutX="403.0" layoutY="355.0" promptText="Protein" />
+         </children>
+      </AnchorPane>
+   </children>
+</fx:root>

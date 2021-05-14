@@ -11,4 +11,9 @@ public class BaseProduct extends MenuItem{
         this.price = price;
         this.title = title;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
 }

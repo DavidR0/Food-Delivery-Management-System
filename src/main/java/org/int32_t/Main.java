@@ -11,11 +11,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         //Admin window
-        Parent root = FXMLLoader.load(getClass().getResource("PresentationLayer/loginAdmin.fxml")); //Loads the UI
-//        primaryStage.setTitle("Admin");
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("PresentationLayer/loginAdmin.fxml"))); //Loads the UI
+        primaryStage.setTitle("Admin");
         Scene scene = new Scene(root, 1123, 721);
-//        primaryStage.setScene(scene);
-//        primaryStage.show();
+        primaryStage.setScene(scene);
+        primaryStage.show();
 
 
 //        Client window

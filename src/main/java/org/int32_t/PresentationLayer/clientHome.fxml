@@ -44,6 +44,8 @@
             <JFXTextField fx:id="sodium" focusColor="WHITE" labelFloat="true" layoutX="619.0" layoutY="32.0" prefHeight="25.0" prefWidth="68.0" style="-fx-text-fill: white" promptText="Sodium" unFocusColor="WHITE" />
             <JFXTextField fx:id="price" focusColor="WHITE" labelFloat="true" layoutX="707.0" layoutY="32.0" prefHeight="25.0" prefWidth="68.0" style="-fx-text-fill: white" promptText="Price" unFocusColor="WHITE" />
             <JFXButton buttonType="RAISED" layoutX="947.0" layoutY="25.0" onAction="#filterItems" prefHeight="40.0" prefWidth="91.0" style="-fx-background-color: #ffffff;" text="Filter" />
+            <JFXButton buttonType="RAISED" layoutX="1049.0" layoutY="26.0" onAction="#refresh" prefHeight="38.0" prefWidth="63.0" style="-fx-background-color: #ffffff;" text="Refresh" />
+
          </children>
       </AnchorPane>
    </children>

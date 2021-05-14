@@ -2,7 +2,11 @@ package org.int32_t.BusinessLayer;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.*;
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 
 public class DeliveryService implements IDeliveryServiceProcessing{
     static Map<Order, Collection<MenuItem>> orders = new HashMap<>();
@@ -43,28 +47,41 @@ public class DeliveryService implements IDeliveryServiceProcessing{
         return orders;
     }
 
-    public static List<MenuItem> getMenu(){
-        menuItems.add(new BaseProduct(12,12,13,2,5,10,"Test1"));
-        menuItems.add(new BaseProduct(12,12,13,2,5,10,"Test2"));
-        menuItems.add(new BaseProduct(12,12,13,2,5,10,"Test3"));
-        menuItems.add(new BaseProduct(1,2,13,2,5,10,"Test4"));
-        menuItems.add(new BaseProduct(3,12,13,2,5,10,"Test5"));
-        menuItems.add(new BaseProduct(3,12,13,2,5,10,"Test6"));
-        menuItems.add(new BaseProduct(3,12,13,2,5,10,"Test7"));
-        menuItems.add(new BaseProduct(3,12,13,2,5,10,"Test8"));
-        menuItems.add(new BaseProduct(3,12,13,2,5,10,"Test9"));
-        menuItems.add(new BaseProduct(3,12,13,2,5,10,"Test10"));
-        menuItems.add(new BaseProduct(3,12,13,2,5,10,"Test11"));
-        menuItems.add(new BaseProduct(3,12,13,2,5,10,"Test12"));
-        CompositeProduct item = new CompositeProduct((List<MenuItem>) menuItems,"Comp 1");
-        menuItems.add(item);
 
-        for(int i = 0; i < menuItems.size();++i){
-            if(!menuItems.get(i).isBase){
-                menuItems.set(i,((CompositeProduct)menuItems.get(i)).convertToBase());
-            }
+    private static final Function<String, MenuItem> mapToItem = (line) -> {
+        String[] p = line.split(",");// a CSV has comma separated lines
+        return new BaseProduct(Float.parseFloat(p[1]),Integer.parseInt(p[2]),Integer.parseInt(p[3]),Integer.parseInt(p[4]),Integer.parseInt(p[5]),Integer.parseInt(p[6]),p[0]);
+    };
+
+    public static void loadMenuFromCSV(){
+        try{
+            List<MenuItem> inputList = new ArrayList<>();
+
+            File inputF = new File("src/main/java/org/int32_t/Resources/products.csv");
+            InputStream inputFS = new FileInputStream(inputF);
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputFS));
+
+            // skip the header of the csv
+            inputList = br.lines().distinct().skip(1).map(mapToItem).distinct().collect(Collectors.toList());
+            br.close();
+            menuItems.addAll(inputList);
+            menuItems = menuItems.stream().distinct().collect(Collectors.toList()); //Remove duplicates
+        } catch (IOException e) {
+            System.out.println("Error reading CSV: " + e);
         }
 
+    }
+
+    public void addToMenu(MenuItem productToAdd){
+        menuItems.add(productToAdd);
+    }
+
+    public void deleteFromMenu(MenuItem productToDelete){
+        menuItems.remove(productToDelete);
+    }
+
+
+    public static List<MenuItem> getMenu(){
         return menuItems;
     }
 }
