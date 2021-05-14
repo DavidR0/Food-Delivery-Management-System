@@ -14,7 +14,7 @@ import org.int32_t.BusinessLayer.MenuItem;
 
 import java.io.IOException;
 
-public class NewProductAdmin extends AnchorPane {
+public class EditProductAdmin extends AnchorPane {
 
     @FXML
     private JFXTextField title;
@@ -42,10 +42,11 @@ public class NewProductAdmin extends AnchorPane {
 
 
     JFXDialog diag;
+    private MenuItem item;
+    private AdminHome adminHome;
 
-
-    public NewProductAdmin() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../PresentationLayer/newProductAdmin.fxml"));
+    public EditProductAdmin(AdminHome adminHome, MenuItem item) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../PresentationLayer/editProductAdmin.fxml"));
         loader.setRoot(this);
         loader.setController(this);
 
@@ -54,16 +55,16 @@ public class NewProductAdmin extends AnchorPane {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        this.adminHome = adminHome;
+        this.item = item;
     }
 
     @FXML
-    void AddItem(ActionEvent event) {
-        if(!title.getText().isEmpty() && !rating.getText().isEmpty() && !calories.getText().isEmpty() && !protein.getText().isEmpty() && !fat.getText().isEmpty() && !sodium.getText().isEmpty()) {
-            BaseProduct prd = new BaseProduct(Float.parseFloat(rating.getText()),Integer.parseInt(calories.getText()),Integer.parseInt(protein.getText()),Integer.parseInt(fat.getText()),Integer.parseInt(sodium.getText()),Integer.parseInt(price.getText()),title.getText());
-            DeliveryService buff = new DeliveryService();
-            buff.addToMenu(prd);
-            diag.close();
-        }
+    void edit(ActionEvent event) {
+        /*TODO read new values and set them*/
+        item.setPrice(3);
+        adminHome.refresh(null);
+        diag.close();
     }
 
     public void setDiag(JFXDialog dialog) {

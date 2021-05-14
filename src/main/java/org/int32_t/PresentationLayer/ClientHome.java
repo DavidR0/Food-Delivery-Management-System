@@ -78,7 +78,7 @@ public class ClientHome {
         for (int i = pageMultiplier * nrElementsPerPage; i < (pageMultiplier + 1) * nrElementsPerPage && i < orders.size(); ++i) {
             MenuItem entry = orders.get(i);
             BaseProduct base = (BaseProduct) entry;
-            filterItemsListView.add(new MenuItemView(this, null, null, null, base, false));
+            filterItemsListView.add(new MenuItemView(null,this, null, null, null, base, false));
         }
         productsList.getChildren().setAll(filterItemsListView);
     }

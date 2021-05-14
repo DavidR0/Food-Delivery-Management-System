@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.io.*;
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 
@@ -55,17 +56,21 @@ public class DeliveryService implements IDeliveryServiceProcessing{
 
     public static void loadMenuFromCSV(){
         try{
-            List<MenuItem> inputList = new ArrayList<>();
 
+            Predicate<MenuItem> itemFilter = n -> (!menuItems.contains(n));
+
+            List<MenuItem> inputList = new ArrayList<>();
             File inputF = new File("src/main/java/org/int32_t/Resources/products.csv");
             InputStream inputFS = new FileInputStream(inputF);
             BufferedReader br = new BufferedReader(new InputStreamReader(inputFS));
 
-            // skip the header of the csv
+            // Read the csv
             inputList = br.lines().distinct().skip(1).map(mapToItem).distinct().collect(Collectors.toList());
             br.close();
-            menuItems.addAll(inputList);
-            menuItems = menuItems.stream().distinct().collect(Collectors.toList()); //Remove duplicates
+            // Update products with only new items from csv
+            menuItems.addAll(inputList.stream().filter(itemFilter).collect(Collectors.toList()));
+            System.out.println("Size: " + menuItems.size());
+
         } catch (IOException e) {
             System.out.println("Error reading CSV: " + e);
         }

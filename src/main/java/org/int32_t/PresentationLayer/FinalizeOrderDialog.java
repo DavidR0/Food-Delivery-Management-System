@@ -57,7 +57,7 @@ public class FinalizeOrderDialog extends AnchorPane {
         for (MenuItem entry : orders) {
             BaseProduct base = (BaseProduct) entry;
             totalPrice += base.computePrice();
-            itemOrdersList.add(new MenuItemView(null,null,orders, this, base,true));
+            itemOrdersList.add(new MenuItemView(null,null,null,orders, this, base,true));
         }
         ordersList.getChildren().setAll(itemOrdersList);
         OrderTotalText.setText("Order Total: $" + totalPrice);

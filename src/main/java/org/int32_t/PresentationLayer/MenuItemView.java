@@ -46,11 +46,12 @@ public class MenuItemView extends AnchorPane {
     private Order orderKey;
     private boolean isOrder;
     private ClientHome currentClient;
+    private AdminHome adminHome;
     private MenuItem item;
     private Collection<MenuItem> cartList;
     private FinalizeOrderDialog diag;
 
-    public MenuItemView(ClientHome currentClient, Order orderKey, Collection<MenuItem> cartList, FinalizeOrderDialog diag,MenuItem item, Boolean isOrder) {
+    public MenuItemView(AdminHome adminHome,ClientHome currentClient, Order orderKey, Collection<MenuItem> cartList, FinalizeOrderDialog diag,MenuItem item, Boolean isOrder) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../PresentationLayer/menuItem.fxml"));
         loader.setRoot(this);
         loader.setController(this);
@@ -101,6 +102,11 @@ public class MenuItemView extends AnchorPane {
         this.item = item;
         this.cartList = cartList;
         this.diag = diag;
+        this.adminHome = adminHome;
+    }
+
+    public void setBtnText(String text){
+        orderBTN.setText(text);
     }
 
     @FXML
@@ -112,9 +118,12 @@ public class MenuItemView extends AnchorPane {
         }else if(isOrder){
             //Let the employee complete the order
             new DeliveryService().removeOrder(orderKey);
-        }else{
+        }else if(currentClient != null){
             //Add to client shopping cart
             currentClient.addItem(item);
+        }else {
+            //Admin Edit button
+            adminHome.editProductDiag(item);
         }
     }
 

@@ -88,7 +88,7 @@ public class EmployeeHome implements PropertyChangeListener {
 
             for(MenuItem itm : entry.getValue()){
                 BaseProduct base = (BaseProduct) itm;
-                MenuItemView panel = new MenuItemView(null,entry.getKey(),null,null, base,true);
+                MenuItemView panel = new MenuItemView(null,null,entry.getKey(),null,null, base,true);
                 panel.setStyle("-fx-background-color: " + color + ";");
                 itemOrdersList.add(panel);
             }
