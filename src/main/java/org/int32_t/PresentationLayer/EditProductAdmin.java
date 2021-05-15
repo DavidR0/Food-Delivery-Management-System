@@ -7,9 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-import org.int32_t.BusinessLayer.BaseProduct;
-import org.int32_t.BusinessLayer.DeliveryService;
 import org.int32_t.BusinessLayer.MenuItem;
 
 import java.io.IOException;
@@ -61,8 +58,35 @@ public class EditProductAdmin extends AnchorPane {
 
     @FXML
     void edit(ActionEvent event) {
-        /*TODO read new values and set them*/
-        item.setPrice(3);
+        if(!title.getText().isEmpty()){
+            item.setTitle(title.getText());
+        }
+
+        if(!rating.getText().isEmpty()){
+            item.setRating(Float.parseFloat(rating.getText()));
+        }
+
+        if(!calories.getText().isEmpty()){
+            item.setCalories(Integer.parseInt(calories.getText()));
+        }
+
+        if(!protein.getText().isEmpty()){
+            item.setProtein(Integer.parseInt(protein.getText()));
+        }
+
+        if(!fat.getText().isEmpty()){
+            item.setFat(Integer.parseInt(fat.getText()));
+        }
+
+        if(!price.getText().isEmpty()){
+            item.setPrice(Integer.parseInt(price.getText()));
+        }
+
+        if(!sodium.getText().isEmpty()){
+            item.setSodium(Integer.parseInt(sodium.getText()));
+        }
+
+
         adminHome.refresh(null);
         diag.close();
     }
