@@ -26,8 +26,8 @@ import java.util.stream.Collectors;
 public class AdminHome {
 
     private int pageMultiplier = 0;
-    private int nrElementsPerPage = 10;
-    List<MenuItem> itemsList = new LinkedList<>();
+    private final int nrElementsPerPage = 10;
+    private List<MenuItem> itemsList = new LinkedList<>();
 
     @FXML
     private StackPane root;
@@ -106,6 +106,7 @@ public class AdminHome {
 
     @FXML
     public void initialize(){
+        itemsList.addAll(DeliveryService.getMenu());
         updateView(DeliveryService.getMenu());
         rootPane.setOpacity(0);
         fadeIn();
@@ -176,5 +177,14 @@ public class AdminHome {
 
     public void refresh(ActionEvent actionEvent) {
        filterItems(null);
+    }
+
+    @FXML
+    void newCompositeProduct(ActionEvent event) {
+        AdminCompositeProduct diag = new AdminCompositeProduct();
+        JFXDialog dialog = new JFXDialog(root, diag, JFXDialog.DialogTransition.CENTER);
+        diag.setDiag(dialog);
+        dialog.show();
+
     }
 }

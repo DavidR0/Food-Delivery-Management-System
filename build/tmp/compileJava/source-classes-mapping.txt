@@ -30,6 +30,10 @@ org/int32_t/PresentationLayer/FinalizeOrderDialog.java
  org.int32_t.PresentationLayer.FinalizeOrderDialog
 org/int32_t/PresentationLayer/EmployeeHome.java
  org.int32_t.PresentationLayer.EmployeeHome
+org/int32_t/PresentationLayer/SimpleProductView.java
+ org.int32_t.PresentationLayer.SimpleProductView
+org/int32_t/PresentationLayer/AdminCompositeProduct.java
+ org.int32_t.PresentationLayer.AdminCompositeProduct
 org/int32_t/PresentationLayer/MenuItemView.java
  org.int32_t.PresentationLayer.MenuItemView
 org/int32_t/PresentationLayer/EditProductAdmin.java

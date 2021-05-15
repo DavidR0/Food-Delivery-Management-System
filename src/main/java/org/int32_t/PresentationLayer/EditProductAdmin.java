@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
+import org.int32_t.BusinessLayer.DeliveryService;
 import org.int32_t.BusinessLayer.MenuItem;
 
 import java.io.IOException;
@@ -86,7 +87,14 @@ public class EditProductAdmin extends AnchorPane {
             item.setSodium(Integer.parseInt(sodium.getText()));
         }
 
+        adminHome.refresh(null);
+        diag.close();
+    }
 
+    @FXML
+    void delete(ActionEvent event) {
+        DeliveryService buff = new DeliveryService();
+        buff.deleteFromMenu(item);
         adminHome.refresh(null);
         diag.close();
     }

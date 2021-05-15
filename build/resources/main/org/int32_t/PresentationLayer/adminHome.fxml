@@ -54,6 +54,7 @@
                               <JFXButton buttonType="RAISED" layoutX="947.0" layoutY="25.0" onAction="#filterItems" prefHeight="40.0" prefWidth="91.0" style="-fx-background-color: #ffffff;" text="Filter" />
                               <JFXButton buttonType="RAISED" layoutX="529.0" layoutY="628.0" onAction="#loadCSV" prefHeight="61.0" prefWidth="108.0" style="-fx-background-color: #ffffff;" text="Load CSV" />
                               <JFXButton buttonType="RAISED" layoutX="1049.0" layoutY="26.0" onAction="#refresh" prefHeight="38.0" prefWidth="63.0" style="-fx-background-color: #ffffff;" text="Refresh" />
+                              <JFXButton buttonType="RAISED" layoutX="865.0" layoutY="636.0" onAction="#newCompositeProduct" prefHeight="61.0" prefWidth="108.0" style="-fx-background-color: #ffffff;" text="New Composite" />
                            </children>
                         </AnchorPane>
                      </children>

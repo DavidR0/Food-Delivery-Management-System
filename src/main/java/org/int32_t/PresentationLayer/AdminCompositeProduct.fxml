@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<fx:root fx:id="root" type="AnchorPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <AnchorPane fx:id="rootPane" prefHeight="721.0" prefWidth="1123.0" style="-fx-background-color: #1f2c47; -fx-border-color: #008000; -fx-border-radius: 3px; -fx-border-width: 2px;">
+            <children>
+                <Label layoutX="14.0" layoutY="14.0" prefHeight="61.0" prefWidth="175.0" text="Coposite" textFill="WHITE">
+                    <font>
+                        <Font size="31.0" />
+                    </font>
+                </Label>
+                <AnchorPane layoutX="14.0" layoutY="75.0" prefHeight="569.0" prefWidth="1093.0">
+                    <children>
+                  <HBox prefHeight="569.0" prefWidth="1093.0">
+                     <children>
+                              <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="569.0" prefWidth="546.0" style="-fx-background-color: #1f2c47;" vbarPolicy="NEVER">
+                                  <content>
+                                      <VBox fx:id="productsList" prefHeight="567.0" prefWidth="517.0" spacing="20.0" style="-fx-background-color: #1f2c47;">
+                                          <padding>
+                                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                          </padding>
+                                      </VBox>
+                                  </content>
+                              </ScrollPane>
+                        <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="569.0" prefWidth="550.0" style="-fx-background-color: #1f2c47;" vbarPolicy="NEVER">
+                           <content>
+                              <VBox fx:id="selectedProducts" prefHeight="613.0" prefWidth="1091.0" spacing="20.0" style="-fx-background-color: #1f2c47;">
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </HBox>
+                    </children>
+                </AnchorPane>
+                <JFXButton buttonType="RAISED" layoutX="1001.0" layoutY="646.0" onAction="#createProduct" prefHeight="61.0" prefWidth="108.0" style="-fx-background-color: #ffffff;" text="Create Product" />
+                <JFXButton buttonType="RAISED" layoutX="14.0" layoutY="657.0" onAction="#previousPage" prefHeight="40.0" prefWidth="108.0" style="-fx-background-color: #ffffff;" text="Previous" />
+                <JFXButton buttonType="RAISED" layoutX="149.0" layoutY="657.0" onAction="#nextPage" prefHeight="40.0" prefWidth="108.0" style="-fx-background-color: #ffffff;" text="Next" />
+                <JFXTextField fx:id="keyword" focusColor="WHITE" labelFloat="true" layoutX="241.0" layoutY="26.0" prefHeight="25.0" prefWidth="68.0" promptText="Keyword" style="-fx-text-fill: white" unFocusColor="WHITE" />
+                <JFXButton buttonType="RAISED" layoutX="368.0" layoutY="19.0" onAction="#filterItems" prefHeight="40.0" prefWidth="91.0" style="-fx-background-color: #ffffff;" text="Filter" />
+
+            </children>
+        </AnchorPane>
+    </children>
+</fx:root>
