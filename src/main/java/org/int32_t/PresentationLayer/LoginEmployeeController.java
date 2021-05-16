@@ -10,8 +10,11 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.int32_t.BusinessLayer.User;
+import org.int32_t.BusinessLayer.UserManagement;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class LoginEmployeeController {
 
@@ -45,30 +48,35 @@ public class LoginEmployeeController {
 
     @FXML
     void signIn(ActionEvent event) {
-        FadeTransition fadeTransition = new FadeTransition();
-        fadeTransition.setDuration(Duration.millis(500));
-        fadeTransition.setNode(rootPane);
-        fadeTransition.setFromValue(1);
-        fadeTransition.setToValue(0);
-        fadeTransition.setOnFinished(event1 -> {
+        User user = new User(userName.getText(), password.getText(), 1);
 
-            try {
-                loadSignIn();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if(new UserManagement().validateLogin(user)) {
 
-        });
-        fadeTransition.play();
+            FadeTransition fadeTransition = new FadeTransition();
+            fadeTransition.setDuration(Duration.millis(500));
+            fadeTransition.setNode(rootPane);
+            fadeTransition.setFromValue(1);
+            fadeTransition.setToValue(0);
+            fadeTransition.setOnFinished(event1 -> {
+
+                try {
+                    loadSignIn();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            });
+            fadeTransition.play();
+        }
     }
 
     private void loadSignIn() throws IOException {
         Stage thisStage = (Stage) rootPane.getScene().getWindow();
-        thisStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../PresentationLayer/employeeHome.fxml")), 1123, 721));
+        thisStage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../PresentationLayer/employeeHome.fxml"))), 1123, 721));
     }
 
     private void loadCreateAccount() throws IOException {
         Stage thisStage = (Stage) rootPane.getScene().getWindow();
-        thisStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../PresentationLayer/createAccountManagement.fxml")), 1123, 721));
+        thisStage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../PresentationLayer/createAccountManagement.fxml"))), 1123, 721));
     }
 }

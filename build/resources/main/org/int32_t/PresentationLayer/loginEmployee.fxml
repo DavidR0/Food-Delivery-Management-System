@@ -11,8 +11,8 @@
     <children>
         <AnchorPane layoutX="673.0" layoutY="82.0" prefHeight="558.0" prefWidth="361.0" style="-fx-background-color: #1F2c47;">
             <children>
-                <JFXTextField fx:id="userName" focusColor="WHITE" labelFloat="true" layoutX="47.0" layoutY="124.0" prefHeight="37.0" prefWidth="265.0" promptText="Username" unFocusColor="WHITE" />
-                <JFXPasswordField fx:id="password" focusColor="WHITE" labelFloat="true" layoutX="47.0" layoutY="205.0" prefHeight="37.0" prefWidth="265.0" promptText="Password" unFocusColor="WHITE" />
+                <JFXTextField fx:id="userName" style="-fx-text-fill: white" focusColor="WHITE" labelFloat="true" layoutX="47.0" layoutY="124.0" prefHeight="37.0" prefWidth="265.0" promptText="Username" unFocusColor="WHITE" />
+                <JFXPasswordField fx:id="password"  style="-fx-text-fill: white" focusColor="WHITE" labelFloat="true" layoutX="47.0" layoutY="205.0" prefHeight="37.0" prefWidth="265.0" promptText="Password" unFocusColor="WHITE" />
                 <JFXButton layoutX="47.0" layoutY="373.0" onAction="#signIn" prefHeight="43.0" prefWidth="265.0" style="-fx-background-color: #6191bd;" text="Sign In" />
                 <Label layoutX="135.0" layoutY="34.0" prefHeight="40.0" prefWidth="104.0" text="Sign In" textFill="WHITE">
                     <font>

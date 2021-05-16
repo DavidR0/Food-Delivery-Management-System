@@ -1,6 +1,8 @@
 package org.int32_t.PresentationLayer;
 
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.int32_t.BusinessLayer.User;
+import org.int32_t.BusinessLayer.UserManagement;
 
 import java.io.IOException;
 
@@ -18,6 +22,12 @@ public class CreateAccountManagement {
     private AnchorPane rootPane;
     @FXML
     private JFXCheckBox adminCheck;
+
+    @FXML
+    private JFXTextField username;
+
+    @FXML
+    private JFXPasswordField password;
 
     @FXML
     public void initialize(){
@@ -35,7 +45,9 @@ public class CreateAccountManagement {
     }
 
     public void create(ActionEvent actionEvent) {
-        loadLogin(adminCheck.isSelected());
+        int rights = adminCheck.isSelected()?0:1;
+        User newUser = new User(username.getText(),password.getText(),rights);
+        if(new UserManagement().addUser(newUser)) loadLogin(adminCheck.isSelected());
     }
 
     private void loadLogin(boolean admin){

@@ -1,5 +1,7 @@
 package org.int32_t.PresentationLayer;
 
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.int32_t.BusinessLayer.User;
+import org.int32_t.BusinessLayer.UserManagement;
 
 import java.io.IOException;
 
@@ -15,6 +19,12 @@ public class CreateAccountClient {
 
     @FXML
     private AnchorPane rootPane;
+
+    @FXML
+    private JFXTextField username;
+
+    @FXML
+    private JFXPasswordField password;
 
     @FXML
     public void initialize(){
@@ -32,8 +42,10 @@ public class CreateAccountClient {
     }
 
     public void createAccount(ActionEvent actionEvent) {
-        loadLogin();
-
+        if(!username.getText().isEmpty() && !password.getText().isEmpty()) {
+            User newUser = new User(username.getText(), password.getText(), 2);
+            if (new UserManagement().addUser(newUser)) loadLogin();
+        }
     }
 
     private void loadLogin(){

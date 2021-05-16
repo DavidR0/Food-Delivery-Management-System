@@ -10,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.int32_t.BusinessLayer.User;
+import org.int32_t.BusinessLayer.UserManagement;
 
 import java.io.IOException;
 
@@ -45,21 +47,27 @@ public class LoginAdminController {
 
     @FXML
     void signIn(ActionEvent event) throws IOException {
-        FadeTransition fadeTransition = new FadeTransition();
-        fadeTransition.setDuration(Duration.millis(500));
-        fadeTransition.setNode(rootPane);
-        fadeTransition.setFromValue(1);
-        fadeTransition.setToValue(0);
-        fadeTransition.setOnFinished(event1 -> {
+        User user = new User(username.getText(), password.getText(), 0);
 
-            try {
-                loadSignIn();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if(new UserManagement().validateLogin(user)) {
 
-        });
-        fadeTransition.play();
+            FadeTransition fadeTransition = new FadeTransition();
+            fadeTransition.setDuration(Duration.millis(500));
+            fadeTransition.setNode(rootPane);
+            fadeTransition.setFromValue(1);
+            fadeTransition.setToValue(0);
+            fadeTransition.setOnFinished(event1 -> {
+
+                try {
+                    loadSignIn();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            });
+            fadeTransition.play();
+        }
+
     }
 
     private void loadSignIn() throws IOException {
