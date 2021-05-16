@@ -65,7 +65,8 @@ public class ClientHome {
     public void initialize() {
         itemsList.clear();
         filterItemsList.clear();
-        filterItemsList = itemsList = DeliveryService.getMenu();
+        filterItemsList.addAll(DeliveryService.getMenu());
+        itemsList.addAll(DeliveryService.getMenu());
         updateView(itemsList);
         rootPane.setOpacity(0);
         fadeIn();
@@ -163,7 +164,7 @@ public class ClientHome {
     }
 
     public void refresh(ActionEvent actionEvent) {
-        itemsList = DeliveryService.getMenu();
+        itemsList.addAll(DeliveryService.getMenu());
         filterItems(null);
 
     }

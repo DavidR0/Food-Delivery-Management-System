@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
@@ -11,6 +13,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <StackPane fx:id="root" prefHeight="721.0" prefWidth="1123.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.int32_t.PresentationLayer.AdminHome">
    <children>
@@ -63,7 +66,29 @@
           </Tab>
           <Tab text="Reports">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Text layoutX="470.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Report Management">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="14.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time Interval of the Orders – a report that shows the orders performed between a given start hour and a given end hour regardless the date" wrappingWidth="420.76171875" />
+                        <JFXTextField fx:id="startHour" labelFloat="true" layoutX="470.0" layoutY="103.0" promptText="Start Hour" />
+                        <JFXTextField fx:id="endHour" labelFloat="true" layoutX="682.0" layoutY="103.0" promptText="End Hour" />
+                        <Text layoutX="14.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The products ordered more than a specified number of times so far." wrappingWidth="420.76171875" />
+                        <JFXButton buttonType="RAISED" layoutX="930.0" layoutY="599.0" onAction="#generateReport" prefHeight="61.0" prefWidth="108.0" style="-fx-background-color: #ffffff;" text="Generate Report" />
+                        <JFXCheckBox fx:id="selectOp1" layoutX="969.0" layoutY="119.0" text=" " />
+                        <JFXCheckBox fx:id="selectOp2" layoutX="969.0" layoutY="220.0" text=" " />
+                        <Text layoutX="14.0" layoutY="329.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The clients that have ordered more than a specified number of times and the value of the order was higher than the specified amount" wrappingWidth="369.76171875" />
+                        <JFXTextField fx:id="nrOrders" labelFloat="true" layoutX="470.0" layoutY="321.0" promptText="Number of Orders" />
+                        <JFXCheckBox fx:id="selectOp3" layoutX="969.0" layoutY="325.0" text=" " />
+                        <Text layoutX="14.0" layoutY="452.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The products ordered within a specified day with the number of times they have been ordered." wrappingWidth="369.76171875" />
+                        <JFXCheckBox fx:id="selectOp4" layoutX="969.0" layoutY="447.0" text=" " />
+                        <DatePicker fx:id="datePicker" layoutX="470.0" layoutY="435.0" />
+                        <JFXTextField fx:id="amount1" labelFloat="true" layoutX="470.0" layoutY="226.0" promptText="Amount" />
+                        <JFXTextField fx:id="orderValue" labelFloat="true" layoutX="694.0" layoutY="322.0" promptText="Order Value" />
+                     </children></AnchorPane>
             </content>
           </Tab>
         </tabs>

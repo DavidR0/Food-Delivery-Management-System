@@ -1,5 +1,7 @@
 package org.int32_t.PresentationLayer;
 
+import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXTextField;
 import javafx.animation.FadeTransition;
@@ -7,27 +9,56 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Menu;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.int32_t.BusinessLayer.BaseProduct;
-import org.int32_t.BusinessLayer.DeliveryService;
-import org.int32_t.BusinessLayer.MenuItem;
+import org.int32_t.BusinessLayer.*;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class AdminHome {
+public class AdminHome extends StackPane{
 
     private int pageMultiplier = 0;
     private final int nrElementsPerPage = 10;
     private List<MenuItem> itemsList = new LinkedList<>();
+
+    @FXML
+    private JFXTextField startHour;
+
+    @FXML
+    private JFXTextField endHour;
+
+    @FXML
+    private JFXCheckBox selectOp1;
+
+    @FXML
+    private JFXCheckBox selectOp2;
+
+    @FXML
+    private JFXTextField nrOrders;
+
+    @FXML
+    private JFXTextField orderValue;
+
+    @FXML
+    private JFXTextField amount1;
+
+    @FXML
+    private JFXCheckBox selectOp3;
+
+    @FXML
+    private DatePicker datePicker;
+
+    @FXML
+    private JFXCheckBox selectOp4;
 
     @FXML
     private StackPane root;
@@ -186,5 +217,110 @@ public class AdminHome {
         diag.setDiag(dialog);
         dialog.show();
 
+    }
+
+    @FXML
+    void generateReport(ActionEvent event) {
+        Map<Order, Collection<MenuItem>> completedOrders = DeliveryService.getCompletedOrders();
+        String report = "Start of Report: \n";
+
+        if(selectOp1.isSelected()){
+            if(!startHour.getText().isEmpty() && !endHour.getText().isEmpty()){
+                //Generate report 1
+                report += "Option 1 : \n";
+
+                for (Map.Entry<Order, Collection<MenuItem>> entry : completedOrders.entrySet()){
+                    long time = entry.getKey().getDate().getHours();
+                    if(Integer.parseInt(startHour.getText()) <= time  && time <= Integer.parseInt(endHour.getText())){
+                      for(MenuItem item : entry.getValue()){
+                        report += item.getTitle() + "\n";
+                      }
+                    }
+                 }
+                report += "\n";
+            }
+        }
+
+        if(selectOp2.isSelected()) {
+            //Generate report 2
+            if(!amount1.getText().isEmpty()) {
+                report += "Option 2 : \n";
+
+                Map<String, Integer> numberTimesOrdered = new HashMap<>();
+                //See how many times each item was ordered
+                for (Map.Entry<Order, Collection<MenuItem>> entry : completedOrders.entrySet()) {
+                    for (MenuItem item : entry.getValue()) {
+                        numberTimesOrdered.merge(item.getTitle(), 1, Integer::sum);
+                    }
+                }
+
+                for (Map.Entry<String, Integer> entry : numberTimesOrdered.entrySet()) {
+                    if (entry.getValue() >= Integer.parseInt(amount1.getText())) {
+                        report += entry.getKey() +"    " +entry.getValue() + "x\n";
+                    }
+                }
+                report += "\n";
+            }
+        }
+
+        if(selectOp3.isSelected()){
+            if(!nrOrders.getText().isEmpty() && !orderValue.getText().isEmpty()){
+                //Generate report 3
+                report += "Option 3 : \n";
+
+                //Count the number of orders per customer whose order is larger then a specific amount
+                Map<Integer, Integer> numberTimesOrdered = new HashMap<>();
+                for (Map.Entry<Order, Collection<MenuItem>> entry : completedOrders.entrySet()) {
+                    int orderValue = 0;
+                    for (MenuItem item : entry.getValue()) {
+                        orderValue += item.getPrice();
+                    }
+                    if(orderValue >= Integer.parseInt(this.orderValue.getText())) {
+                        numberTimesOrdered.merge(entry.getKey().getClientID(), 1, Integer::sum);
+                    }
+                }
+
+                for (Map.Entry<Integer, Integer> entry : numberTimesOrdered.entrySet()) {
+                    if(entry.getValue() >= Integer.parseInt(nrOrders.getText())){
+                        report += entry.getKey() + "\n";
+                    }
+                }
+
+                report += "\n";
+            }
+        }
+
+        if(selectOp4.isSelected()) {
+            if (datePicker.getValue() != null) {
+                //Generate report 4
+                report += "Option 4 : \n";
+
+                Map<String, Integer> numberTimesOrdered = new HashMap<>();
+                //See how many times each item was ordered
+                for (Map.Entry<Order, Collection<MenuItem>> entry : completedOrders.entrySet()) {
+                    if(convertToLocalDateViaSqlDate(entry.getKey().getDate()).compareTo(datePicker.getValue()) == 0) {
+                        for (MenuItem item : entry.getValue()) {
+                            numberTimesOrdered.merge(item.getTitle(), 1, Integer::sum);
+                        }
+                    }
+                }
+
+
+                for (Map.Entry<String, Integer> entry : numberTimesOrdered.entrySet()) {
+                        report += entry.getKey() + "      "+ entry.getValue() +"x\n";
+                }
+
+
+                report += "\n";
+            }
+        }
+
+       // System.out.println(report);
+        String fName = "report" + String.valueOf(new Date().getTime()) + ".txt";
+        new FileWriter(fName,report);
+    }
+
+    private LocalDate convertToLocalDateViaSqlDate(Date dateToConvert) {
+        return new java.sql.Date(dateToConvert.getTime()).toLocalDate();
     }
 }

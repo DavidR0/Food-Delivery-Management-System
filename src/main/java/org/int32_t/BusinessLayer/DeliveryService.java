@@ -47,6 +47,7 @@ public class DeliveryService implements IDeliveryServiceProcessing{
     public Map<Order, Collection<MenuItem>> getOrders(){
         return orders;
     }
+    public static Map<Order, Collection<MenuItem>> getCompletedOrders(){ return completedOrders; }
 
 
     private static final Function<String, MenuItem> mapToItem = (line) -> {

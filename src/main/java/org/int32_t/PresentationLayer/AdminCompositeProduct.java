@@ -105,9 +105,12 @@ public class AdminCompositeProduct extends AnchorPane {
 
     @FXML
     void createProduct(ActionEvent event) {
-        CompositeProduct product = new CompositeProduct(selectedItems,"title");
-        DeliveryService dev = new DeliveryService();
-        dev.addToMenu(product.convertToBase());
+        if(!selectedItems.isEmpty()) {
+            CompositeProduct product = new CompositeProduct(selectedItems, "title");
+            DeliveryService dev = new DeliveryService();
+            dev.addToMenu(product.convertToBase());
+            selectedItems.clear();
+        }
         dialog.close();
     }
 
