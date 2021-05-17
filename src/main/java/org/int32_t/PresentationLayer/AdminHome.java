@@ -15,11 +15,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.int32_t.BusinessLayer.*;
+import org.int32_t.DataLayer.FileWriter;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -229,8 +229,6 @@ public class AdminHome extends StackPane{
                 //Generate report 1
                 report.append( "Option 1 : \n");
                 Predicate<Map.Entry<Order, Collection<MenuItem>>> dateFilter = n -> (Integer.parseInt(startHour.getText()) <= n.getKey().getDate().getHours() && n.getKey().getDate().getHours() <= Integer.parseInt(endHour.getText()));
-
-//                String filteredItems = completedOrders.entrySet().stream().filter(dateFilter).reduce("",(x,y)->x + y.getValue().stream().reduce("",(z,k)->z + k.getTitle()));
 
                 StringBuilder finalReport = new StringBuilder();
                 completedOrders.entrySet().stream().filter(dateFilter).forEach(n->{

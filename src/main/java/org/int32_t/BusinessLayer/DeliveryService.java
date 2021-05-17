@@ -1,5 +1,8 @@
 package org.int32_t.BusinessLayer;
 
+import org.int32_t.DataLayer.FileWriter;
+import org.int32_t.DataLayer.Serializator;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.*;
@@ -10,19 +13,48 @@ import java.util.stream.Collectors;
 
 
 public class DeliveryService implements IDeliveryServiceProcessing{
-    static Map<Order, Collection<MenuItem>> orders = new HashMap<>();
-    static Map<Order, Collection<MenuItem>> completedOrders = new HashMap<>();
-    static List<MenuItem> menuItems = new LinkedList<>();
-    static List<PropertyChangeListener> listeners = new ArrayList<>();
+    private static Map<Order, Collection<MenuItem>> orders = new HashMap<>();
+    private static Map<Order, Collection<MenuItem>> completedOrders = new HashMap<>();
+    private static List<MenuItem> menuItems = new LinkedList<>();
+    private static List<PropertyChangeListener> listeners = new ArrayList<>();
+    private static boolean deserializedObjects = false;
+    private static final String ordersFileName = "ordersObj.txt";
+    private static final String menuFileName = "menuObj.txt";
+    private static final String finishedOrdersFileName = "finishedOrdersObj.txt";
 
     static private int currentOrder = 0;
+
+    public DeliveryService() {
+        if(!deserializedObjects){
+            //Load orders
+            Serializator<Map<Order, Collection<MenuItem>>> sr = new Serializator<>();
+            orders = sr.deserialize(orders,ordersFileName);
+            //Load finished orders
+            completedOrders = sr.deserialize(completedOrders,finishedOrdersFileName);
+            //Load Menu
+            Serializator<List<MenuItem>> sr1 = new Serializator<>();
+            menuItems = sr1.deserialize(menuItems,menuFileName);
+            deserializedObjects = true;
+        }
+
+    }
 
     @Override
     public void createOrder(Collection<MenuItem> items, int clientId) {
         Order order = new Order(currentOrder,clientId,new Date());
         Collection<MenuItem> buff = new LinkedList<MenuItem>(items);
 
+        StringBuilder orderBill = new StringBuilder();
+        buff.forEach(n->{
+            orderBill.append(n.getTitle()).append("    ").append(n.getPrice()).append("$\n");
+        });
+
+        new FileWriter("BillOrder"+clientId+currentOrder+".txt",orderBill.toString());
+
         orders.put(order,buff);
+        Serializator<Map<Order, Collection<MenuItem>>> sr = new Serializator<>();
+        sr.toSerial(orders,ordersFileName);
+
         currentOrder++;
 
         notifyListeners(items);
@@ -41,6 +73,11 @@ public class DeliveryService implements IDeliveryServiceProcessing{
     public void removeOrder(Order order){
         completedOrders.put(order,orders.get(order));
         orders.remove(order);
+        Serializator<Map<Order, Collection<MenuItem>>> sr = new Serializator<>();
+        sr.toSerial(orders,ordersFileName);
+        sr.toSerial(completedOrders,finishedOrdersFileName);
+
+
         notifyListeners(null);
     }
 
@@ -71,6 +108,9 @@ public class DeliveryService implements IDeliveryServiceProcessing{
             // Update products with only new items from csv
             menuItems.addAll(inputList.stream().filter(itemFilter).collect(Collectors.toList()));
             System.out.println("Size: " + menuItems.size());
+            Serializator<List<MenuItem>> sr1 = new Serializator<>();
+            sr1.toSerial(menuItems,menuFileName);
+
 
         } catch (IOException e) {
             System.out.println("Error reading CSV: " + e);
@@ -80,10 +120,14 @@ public class DeliveryService implements IDeliveryServiceProcessing{
 
     public void addToMenu(MenuItem productToAdd){
         menuItems.add(productToAdd);
+        Serializator<List<MenuItem>> sr1 = new Serializator<>();
+        sr1.toSerial(menuItems,menuFileName);
     }
 
     public void deleteFromMenu(MenuItem productToDelete){
         menuItems.remove(productToDelete);
+        Serializator<List<MenuItem>> sr1 = new Serializator<>();
+        sr1.toSerial(menuItems,menuFileName);
     }
 
 
