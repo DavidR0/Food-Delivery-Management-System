@@ -1,9 +1,10 @@
 package org.int32_t.BusinessLayer;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-public class Order {
+public class Order implements Serializable {
     private int orderID;
     private int clientID;
     private Date date;
@@ -47,5 +48,14 @@ public class Order {
     @Override
     public int hashCode() {
         return Objects.hash(orderID, clientID, date);
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderID=" + orderID +
+                ", clientID=" + clientID +
+                ", date=" + date +
+                '}';
     }
 }

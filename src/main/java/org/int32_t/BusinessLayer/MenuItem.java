@@ -1,8 +1,9 @@
 package org.int32_t.BusinessLayer;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class MenuItem {
+public class MenuItem implements Serializable {
     protected int price;
     protected float rating;
     protected int calories;
@@ -82,4 +83,17 @@ public class MenuItem {
         return getTitle().equals(menuItem.getTitle());
     }
 
+    @Override
+    public String toString() {
+        return "MenuItem{" +
+                "price=" + price +
+                ", rating=" + rating +
+                ", calories=" + calories +
+                ", protein=" + protein +
+                ", fat=" + fat +
+                ", sodium=" + sodium +
+                ", title='" + title + '\'' +
+                ", isBase=" + isBase +
+                '}';
+    }
 }

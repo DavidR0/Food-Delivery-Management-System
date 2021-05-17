@@ -1,6 +1,8 @@
 package org.int32_t.BusinessLayer;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private String Name;
     private String Password;
     private int Rights;  //admin = 0,employee = 1,client = 2;
@@ -33,5 +35,14 @@ public class User {
 
     public void setRights(int rights) {
         Rights = rights;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "Name='" + Name + '\'' +
+                ", Password='" + Password + '\'' +
+                ", Rights=" + Rights +
+                '}';
     }
 }
