@@ -1,7 +1,6 @@
 package org.int32_t.PresentationLayer;
 
 import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXTextField;
 import javafx.animation.FadeTransition;
@@ -10,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Menu;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -21,6 +19,7 @@ import org.int32_t.BusinessLayer.*;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -222,102 +221,141 @@ public class AdminHome extends StackPane{
     @FXML
     void generateReport(ActionEvent event) {
         Map<Order, Collection<MenuItem>> completedOrders = DeliveryService.getCompletedOrders();
-        String report = "Start of Report: \n";
+        StringBuilder report = new StringBuilder();
+        report.append("Start of Report: \n");
 
         if(selectOp1.isSelected()){
             if(!startHour.getText().isEmpty() && !endHour.getText().isEmpty()){
                 //Generate report 1
-                report += "Option 1 : \n";
+                report.append( "Option 1 : \n");
+                Predicate<Map.Entry<Order, Collection<MenuItem>>> dateFilter = n -> (Integer.parseInt(startHour.getText()) <= n.getKey().getDate().getHours() && n.getKey().getDate().getHours() <= Integer.parseInt(endHour.getText()));
 
-                for (Map.Entry<Order, Collection<MenuItem>> entry : completedOrders.entrySet()){
-                    long time = entry.getKey().getDate().getHours();
-                    if(Integer.parseInt(startHour.getText()) <= time  && time <= Integer.parseInt(endHour.getText())){
-                      for(MenuItem item : entry.getValue()){
-                        report += item.getTitle() + "\n";
-                      }
-                    }
-                 }
-                report += "\n";
+//                String filteredItems = completedOrders.entrySet().stream().filter(dateFilter).reduce("",(x,y)->x + y.getValue().stream().reduce("",(z,k)->z + k.getTitle()));
+
+                StringBuilder finalReport = new StringBuilder();
+                completedOrders.entrySet().stream().filter(dateFilter).forEach(n->{
+                    n.getValue().forEach(m->{
+                        finalReport.append(m.getTitle()).append("\n");
+                    });
+                });
+
+                report.append(finalReport.toString()).append("\n");
             }
         }
 
         if(selectOp2.isSelected()) {
             //Generate report 2
             if(!amount1.getText().isEmpty()) {
-                report += "Option 2 : \n";
-
+                report.append("Option 2 : \n");
+                Predicate<Map.Entry<String, Integer>> amountFilter = n -> (n.getValue() >= Integer.parseInt(amount1.getText()));
                 Map<String, Integer> numberTimesOrdered = new HashMap<>();
-                //See how many times each item was ordered
-                for (Map.Entry<Order, Collection<MenuItem>> entry : completedOrders.entrySet()) {
-                    for (MenuItem item : entry.getValue()) {
-                        numberTimesOrdered.merge(item.getTitle(), 1, Integer::sum);
-                    }
-                }
 
-                for (Map.Entry<String, Integer> entry : numberTimesOrdered.entrySet()) {
-                    if (entry.getValue() >= Integer.parseInt(amount1.getText())) {
-                        report += entry.getKey() +"    " +entry.getValue() + "x\n";
-                    }
-                }
-                report += "\n";
+                //See how many times each item was ordered
+                completedOrders.forEach((key, value) -> value.forEach(m -> {
+                    numberTimesOrdered.merge(m.getTitle(), 1, Integer::sum);
+                }));
+                //create the string report
+                StringBuilder finalReport = new StringBuilder();
+                numberTimesOrdered.entrySet().stream().filter(amountFilter).forEach(n->{
+                    finalReport.append(n.getKey()).append("     ").append(n.getValue()).append("x\n");
+                });
+
+
+
+                //See how many times each item was ordered
+//                for (Map.Entry<Order, Collection<MenuItem>> entry : completedOrders.entrySet()) {
+//                    for (MenuItem item : entry.getValue()) {
+//                        numberTimesOrdered.merge(item.getTitle(), 1, Integer::sum);
+//                    }
+//                }
+//
+//                for (Map.Entry<String, Integer> entry : numberTimesOrdered.entrySet()) {
+//                    if (entry.getValue() >= Integer.parseInt(amount1.getText())) {
+//                        report += entry.getKey() +"    " +entry.getValue() + "x\n";
+//                    }
+//                }
+                report.append(finalReport).append("\n");
             }
         }
 
         if(selectOp3.isSelected()){
             if(!nrOrders.getText().isEmpty() && !orderValue.getText().isEmpty()){
                 //Generate report 3
-                report += "Option 3 : \n";
+                report.append("Option 3 : \n");
+                Predicate<Map.Entry<Order, Integer>> amountFilter = n -> (n.getValue() >= Integer.parseInt(this.orderValue.getText()));
 
-                //Count the number of orders per customer whose order is larger then a specific amount
-                Map<Integer, Integer> numberTimesOrdered = new HashMap<>();
-                for (Map.Entry<Order, Collection<MenuItem>> entry : completedOrders.entrySet()) {
-                    int orderValue = 0;
-                    for (MenuItem item : entry.getValue()) {
-                        orderValue += item.getPrice();
-                    }
-                    if(orderValue >= Integer.parseInt(this.orderValue.getText())) {
-                        numberTimesOrdered.merge(entry.getKey().getClientID(), 1, Integer::sum);
-                    }
-                }
+                Map<Order, Integer> numberTimesOrdered = new HashMap<>();
+                StringBuilder finalReport = new StringBuilder();
 
-                for (Map.Entry<Integer, Integer> entry : numberTimesOrdered.entrySet()) {
-                    if(entry.getValue() >= Integer.parseInt(nrOrders.getText())){
-                        report += entry.getKey() + "\n";
-                    }
-                }
+                completedOrders.forEach((key, value) -> value.forEach(m -> {
+                    numberTimesOrdered.merge(key, m.getPrice(), Integer::sum);
+                }));
 
-                report += "\n";
+                numberTimesOrdered.entrySet().stream().filter(amountFilter).forEach(n->{
+                    finalReport.append(n.getKey().getClientID()).append("\n");
+                });
+
+//                //Count the number of orders per customer whose order is larger then a specific amount
+//                for (Map.Entry<Order, Collection<MenuItem>> entry : completedOrders.entrySet()) {
+//                    int orderValue = 0;
+//                    for (MenuItem item : entry.getValue()) {
+//                        orderValue += item.getPrice();
+//                    }
+//                    if(orderValue >= Integer.parseInt(this.orderValue.getText())) {
+//                        numberTimesOrdered.merge(entry.getKey().getClientID(), 1, Integer::sum);
+//                    }
+//                }
+//
+//                for (Map.Entry<Integer, Integer> entry : numberTimesOrdered.entrySet()) {
+//                    if(entry.getValue() >= Integer.parseInt(nrOrders.getText())){
+//                        report += entry.getKey() + "\n";
+//                    }
+//                }
+//
+                report.append(finalReport).append("\n");
             }
         }
 
         if(selectOp4.isSelected()) {
             if (datePicker.getValue() != null) {
                 //Generate report 4
-                report += "Option 4 : \n";
-
+                report.append("Option 4 : \n");
                 Map<String, Integer> numberTimesOrdered = new HashMap<>();
-                //See how many times each item was ordered
-                for (Map.Entry<Order, Collection<MenuItem>> entry : completedOrders.entrySet()) {
-                    if(convertToLocalDateViaSqlDate(entry.getKey().getDate()).compareTo(datePicker.getValue()) == 0) {
-                        for (MenuItem item : entry.getValue()) {
-                            numberTimesOrdered.merge(item.getTitle(), 1, Integer::sum);
-                        }
-                    }
-                }
+                Predicate<Map.Entry<Order, Collection<MenuItem>>> dateFilter = n -> (convertToLocalDateViaSqlDate(n.getKey().getDate()).compareTo(datePicker.getValue()) == 0);
+                StringBuilder finalReport = new StringBuilder();
 
 
-                for (Map.Entry<String, Integer> entry : numberTimesOrdered.entrySet()) {
-                        report += entry.getKey() + "      "+ entry.getValue() +"x\n";
-                }
+                completedOrders.entrySet().stream().filter(dateFilter).forEach(m -> {
+                    m.getValue().forEach(n->{
+                        numberTimesOrdered.merge(n.getTitle(), 1, Integer::sum);
+                    });
+                });
 
+                numberTimesOrdered.forEach((key, value) -> finalReport.append(key).append("     ").append(value).append("x\n"));
 
-                report += "\n";
+//
+//                //See how many times each item was ordered
+//                for (Map.Entry<Order, Collection<MenuItem>> entry : completedOrders.entrySet()) {
+//                    if(convertToLocalDateViaSqlDate(entry.getKey().getDate()).compareTo(datePicker.getValue()) == 0) {
+//                        for (MenuItem item : entry.getValue()) {
+//                            numberTimesOrdered.merge(item.getTitle(), 1, Integer::sum);
+//                        }
+//                    }
+//                }
+//
+//
+//                for (Map.Entry<String, Integer> entry : numberTimesOrdered.entrySet()) {
+//                        report += entry.getKey() + "      "+ entry.getValue() +"x\n";
+//                }
+//
+//
+                report.append(finalReport).append("\n");
             }
         }
 
        // System.out.println(report);
         String fName = "report" + String.valueOf(new Date().getTime()) + ".txt";
-        new FileWriter(fName,report);
+        new FileWriter(fName,report.toString());
     }
 
     private LocalDate convertToLocalDateViaSqlDate(Date dateToConvert) {
