@@ -26,6 +26,7 @@ public class DeliveryService implements IDeliveryServiceProcessing{
 
     public DeliveryService() {
         if(!deserializedObjects){
+            System.out.println("Getting DeliveryService Objects");
             //Load orders
             Serializator<Map<Order, Collection<MenuItem>>> sr = new Serializator<>();
             orders = sr.deserialize(orders,ordersFileName);

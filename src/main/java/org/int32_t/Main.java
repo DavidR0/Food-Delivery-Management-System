@@ -5,11 +5,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.int32_t.BusinessLayer.DeliveryService;
+
 import java.util.Objects;
 
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
+        DeliveryService dv = new DeliveryService();
         //Admin window
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("PresentationLayer/loginAdmin.fxml"))); //Loads the UI
         primaryStage.setTitle("Admin");
