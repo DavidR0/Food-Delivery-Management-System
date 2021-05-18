@@ -3,6 +3,9 @@ package org.int32_t.DataLayer;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Helper class that writes data to a file
+ */
 public class FileWriter {
 
     private String fileName;
@@ -18,7 +21,10 @@ public class FileWriter {
         write(fileContents);
     }
 
-    //write to file
+    /**
+     * Write data to file
+     * @param fileContents contents to be written
+     */
     public void write(String fileContents)  {
         try {
             java.io.FileWriter myWriter = new java.io.FileWriter(fileName);
@@ -29,7 +35,11 @@ public class FileWriter {
         }
     }
 
-    //Try to create the log file
+    /**
+     * Creates a file
+     * @param fileName name of the file
+     * @return a file object that holds the newly created file
+     */
     private File createFile(String fileName) {
         try {
             File myObj = new File(fileName);

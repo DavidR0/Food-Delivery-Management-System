@@ -14,6 +14,9 @@ import org.int32_t.BusinessLayer.MenuItem;
 
 import java.io.IOException;
 
+/**
+ * Class that handles the new product creation window in the admin page
+ */
 public class NewProductAdmin extends AnchorPane {
 
     @FXML

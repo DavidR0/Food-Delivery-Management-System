@@ -23,6 +23,9 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+/**
+ * Class that handles the admin home page
+ */
 public class AdminHome extends StackPane{
 
     private int pageMultiplier = 0;

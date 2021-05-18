@@ -21,6 +21,9 @@ import java.util.stream.Collectors;
 
 import static java.lang.Math.abs;
 
+/**
+ * Class that handles the client home page
+ */
 public class ClientHome {
     @FXML
     private AnchorPane rootPane;

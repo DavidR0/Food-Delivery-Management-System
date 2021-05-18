@@ -17,6 +17,9 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * Class that handles the employee home page
+ */
 public class EmployeeHome implements PropertyChangeListener {
     private List<String> colors = new LinkedList<>();
 

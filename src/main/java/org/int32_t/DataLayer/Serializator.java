@@ -2,7 +2,16 @@ package org.int32_t.DataLayer;
 
 import java.io.*;
 
+/**
+ * Generic class that serializes and deserializes an T Object
+ * @param <T> Type of the class
+ */
 public class Serializator<T> {
+    /**
+     * Serializes the object
+     * @param object object to be serialized
+     * @param fileName name of the file
+     */
         public void toSerial(T object, String fileName){
             FileOutputStream file = null;
             try {
@@ -17,6 +26,12 @@ public class Serializator<T> {
             }
         }
 
+    /**
+     * Deserializes an object from a file
+     * @param object type of the object
+     * @param fileName name of the file
+     * @return the deserialized object
+     */
         public T deserialize(T object, String fileName){
 
             try {

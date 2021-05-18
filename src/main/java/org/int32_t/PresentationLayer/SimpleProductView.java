@@ -11,6 +11,9 @@ import org.int32_t.BusinessLayer.MenuItem;
 
 import java.io.IOException;
 
+/**
+ * class that creates a simple view of an menu item
+ */
 public class SimpleProductView extends AnchorPane {
 
     @FXML

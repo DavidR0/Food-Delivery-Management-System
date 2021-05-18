@@ -1,12 +1,16 @@
 package org.int32_t.BusinessLayer;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 public class CompositeProduct extends MenuItem{
     private List<MenuItem> items;
     private String title;
 
+    /**
+     * Constructor for a composite product
+     * @param items BaseProduct items list
+     * @param title title of the product
+     */
     public CompositeProduct(List<MenuItem> items,String title) {
         this.items = items;
         super.isBase = false;
@@ -14,6 +18,9 @@ public class CompositeProduct extends MenuItem{
         setComputedPrice();
     }
 
+    /**
+     * Updates the price of the product, taking into consideration the items list
+     */
     private void setComputedPrice(){
         int price = 0;
 
@@ -27,10 +34,17 @@ public class CompositeProduct extends MenuItem{
         this.price = price;
     }
 
+    /**
+     *  @return Returns the items list of the composite product
+     */
     public List<MenuItem> getItems() {
         return items;
     }
 
+    /**
+     * Sets the base products list
+     * @param items list to be set
+     */
     public void setItems(List<MenuItem> items) {
         this.items = items;
         setComputedPrice();
@@ -44,6 +58,10 @@ public class CompositeProduct extends MenuItem{
         this.title = title;
     }
 
+    /**
+     * Converts a Composite product to a base product
+     * @return BaseProduct
+     */
     public BaseProduct convertToBase(){
         int calories = 0;
         float rating = 0;

@@ -16,6 +16,9 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Class that handles the cart checkout for the client
+ */
 public class FinalizeOrderDialog extends AnchorPane {
 
     JFXDialog diag;

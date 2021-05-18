@@ -12,6 +12,9 @@ import org.int32_t.BusinessLayer.MenuItem;
 
 import java.io.IOException;
 
+/**
+ * Class that handles the edit product page from the admin
+ */
 public class EditProductAdmin extends AnchorPane {
 
     @FXML

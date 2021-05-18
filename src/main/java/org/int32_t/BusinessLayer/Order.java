@@ -4,10 +4,20 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * Class that holds an order
+ */
 public class Order implements Serializable {
     private int orderID;
     private int clientID;
     private Date date;
+
+    /**
+     * Constructor that creates an order
+     * @param orderID what order was placed
+     * @param clientID who placed the order
+     * @param date when was the order placed
+     */
     public Order(int orderID, int clientID, Date date) {
         this.orderID = orderID;
         this.clientID = clientID;

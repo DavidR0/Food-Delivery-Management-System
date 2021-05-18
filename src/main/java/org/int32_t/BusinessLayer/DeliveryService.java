@@ -11,7 +11,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-/*
+/**
 * Class IDeliveryServiceProcessing implementation
 * @invariant isWellFormed()
 * */
@@ -26,6 +26,9 @@ public class DeliveryService implements IDeliveryServiceProcessing{
     private static final String finishedOrdersFileName = "finishedOrdersObj.txt";
     static private int currentOrder = 0;
 
+    /**
+     * Constructor for the delivery service
+     */
     public DeliveryService() {
         assert isWellFormed();
 
@@ -44,6 +47,10 @@ public class DeliveryService implements IDeliveryServiceProcessing{
 
     }
 
+    /**
+     *
+     * @return a boolean that verifies if the class is well formed
+     */
     protected boolean isWellFormed(){
         if(orders == null) return false;
         if(completedOrders == null) return false;
@@ -53,7 +60,11 @@ public class DeliveryService implements IDeliveryServiceProcessing{
         return true;
     }
 
-
+    /**
+     * Creates an order
+     * @param items List of items in the order
+     * @param clientId Client that placed the order
+     */
     @Override
     public void createOrder(Collection<MenuItem> items, int clientId) {
         assert items != null && clientId > 0;
@@ -77,18 +88,30 @@ public class DeliveryService implements IDeliveryServiceProcessing{
         notifyListeners(items);
     }
 
+    /**
+     * Notifies all the clients that a item has suffered a change
+     * @param item item that changed
+     */
     private void notifyListeners(Collection<MenuItem> item){
         for(PropertyChangeListener lst : listeners){
             lst.propertyChange(new PropertyChangeEvent(this, "NewOrder",null, item));
         }
     }
 
+    /**
+     * Adds a client to a list of listeners that are to be notified
+     * @param listener client that wants to subscribe
+     */
     public void subscribeListener(PropertyChangeListener listener){
         assert listener != null;
 
         listeners.add(listener);
     }
 
+    /**
+     * Removes an order and sets it as finished
+     * @param order order to be removed
+     */
     public void removeOrder(Order order){
         assert order != null;
 
@@ -101,19 +124,30 @@ public class DeliveryService implements IDeliveryServiceProcessing{
         notifyListeners(null);
     }
 
+    /**
+     * @return returns all the current orders
+     */
     public Map<Order, Collection<MenuItem>> getOrders(){
         assert orders != null && orders.size() > 0;
         return orders;
     }
 
+    /**
+     * @return returns all the completed orders
+     */
     public static Map<Order, Collection<MenuItem>> getCompletedOrders(){ return completedOrders; }
 
-
+    /**
+     * Function that maps a line from the csv file to an MenuItem object
+     */
     private static final Function<String, MenuItem> mapToItem = (line) -> {
         String[] p = line.split(",");// a CSV has comma separated lines
         return new BaseProduct(Float.parseFloat(p[1]),Integer.parseInt(p[2]),Integer.parseInt(p[3]),Integer.parseInt(p[4]),Integer.parseInt(p[5]),Integer.parseInt(p[6]),p[0]);
     };
 
+    /**
+     * Loads a menu from a csv file
+     */
     public static void loadMenuFromCSV(){
         try{
 
@@ -140,6 +174,10 @@ public class DeliveryService implements IDeliveryServiceProcessing{
 
     }
 
+    /**
+     * Adds a product to the menu
+     * @param productToAdd product that is to be added
+     */
     public void addToMenu(MenuItem productToAdd){
         assert productToAdd != null;
 
@@ -148,6 +186,10 @@ public class DeliveryService implements IDeliveryServiceProcessing{
         sr1.toSerial(menuItems,menuFileName);
     }
 
+    /**
+     * Deletes aa product from the menu
+     * @param productToDelete product to be deleted
+     */
     public void deleteFromMenu(MenuItem productToDelete){
         assert productToDelete != null;
 
@@ -156,7 +198,9 @@ public class DeliveryService implements IDeliveryServiceProcessing{
         sr1.toSerial(menuItems,menuFileName);
     }
 
-
+    /**
+     * @return Returns the menu
+     */
     public static List<MenuItem> getMenu(){
         return menuItems;
     }

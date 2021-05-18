@@ -2,6 +2,9 @@ package org.int32_t.BusinessLayer;
 
 import java.io.Serializable;
 
+/**
+ * Class that holds a users login credentials with his access rights
+ */
 public class User implements Serializable {
     private String Name;
     private String Password;

@@ -15,6 +15,9 @@ import org.int32_t.BusinessLayer.UserManagement;
 
 import java.io.IOException;
 
+/**
+ * Class that handles the admin login home page
+ */
 public class LoginAdminController {
 
     @FXML

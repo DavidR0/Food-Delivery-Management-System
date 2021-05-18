@@ -16,6 +16,9 @@ import org.int32_t.BusinessLayer.UserManagement;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Class that handles the client login home page
+ */
 public class LoginClientController {
 
     @FXML

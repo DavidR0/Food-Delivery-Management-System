@@ -2,6 +2,9 @@ package org.int32_t.BusinessLayer;
 
 import java.io.Serializable;
 
+/**
+ * Class that holds a menu item
+ */
 public class MenuItem implements Serializable {
     protected int price;
     protected float rating;

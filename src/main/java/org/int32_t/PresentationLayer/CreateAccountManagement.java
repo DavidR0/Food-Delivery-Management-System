@@ -16,6 +16,9 @@ import org.int32_t.BusinessLayer.UserManagement;
 
 import java.io.IOException;
 
+/**
+ * Class that handles the management account creation page
+ */
 public class CreateAccountManagement {
 
     @FXML
