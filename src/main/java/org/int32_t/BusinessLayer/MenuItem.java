@@ -1,7 +1,6 @@
 package org.int32_t.BusinessLayer;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 public class MenuItem implements Serializable {
     protected int price;

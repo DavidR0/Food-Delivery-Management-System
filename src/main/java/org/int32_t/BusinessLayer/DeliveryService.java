@@ -11,7 +11,10 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-
+/*
+* Class IDeliveryServiceProcessing implementation
+* @invariant isWellFormed()
+* */
 public class DeliveryService implements IDeliveryServiceProcessing{
     private static Map<Order, Collection<MenuItem>> orders = new HashMap<>();
     private static Map<Order, Collection<MenuItem>> completedOrders = new HashMap<>();
@@ -21,10 +24,11 @@ public class DeliveryService implements IDeliveryServiceProcessing{
     private static final String ordersFileName = "ordersObj.txt";
     private static final String menuFileName = "menuObj.txt";
     private static final String finishedOrdersFileName = "finishedOrdersObj.txt";
-
     static private int currentOrder = 0;
 
     public DeliveryService() {
+        assert isWellFormed();
+
         if(!deserializedObjects){
             System.out.println("Getting DeliveryService Objects");
             //Load orders
@@ -40,8 +44,20 @@ public class DeliveryService implements IDeliveryServiceProcessing{
 
     }
 
+    protected boolean isWellFormed(){
+        if(orders == null) return false;
+        if(completedOrders == null) return false;
+        if(menuItems == null) return false;
+        if(currentOrder < 0) return false;
+        if(listeners == null) return false;
+        return true;
+    }
+
+
     @Override
     public void createOrder(Collection<MenuItem> items, int clientId) {
+        assert items != null && clientId > 0;
+
         Order order = new Order(currentOrder,clientId,new Date());
         Collection<MenuItem> buff = new LinkedList<MenuItem>(items);
 
@@ -68,23 +84,28 @@ public class DeliveryService implements IDeliveryServiceProcessing{
     }
 
     public void subscribeListener(PropertyChangeListener listener){
+        assert listener != null;
+
         listeners.add(listener);
     }
 
     public void removeOrder(Order order){
+        assert order != null;
+
         completedOrders.put(order,orders.get(order));
         orders.remove(order);
         Serializator<Map<Order, Collection<MenuItem>>> sr = new Serializator<>();
         sr.toSerial(orders,ordersFileName);
         sr.toSerial(completedOrders,finishedOrdersFileName);
 
-
         notifyListeners(null);
     }
 
     public Map<Order, Collection<MenuItem>> getOrders(){
+        assert orders != null && orders.size() > 0;
         return orders;
     }
+
     public static Map<Order, Collection<MenuItem>> getCompletedOrders(){ return completedOrders; }
 
 
@@ -120,12 +141,16 @@ public class DeliveryService implements IDeliveryServiceProcessing{
     }
 
     public void addToMenu(MenuItem productToAdd){
+        assert productToAdd != null;
+
         menuItems.add(productToAdd);
         Serializator<List<MenuItem>> sr1 = new Serializator<>();
         sr1.toSerial(menuItems,menuFileName);
     }
 
     public void deleteFromMenu(MenuItem productToDelete){
+        assert productToDelete != null;
+
         menuItems.remove(productToDelete);
         Serializator<List<MenuItem>> sr1 = new Serializator<>();
         sr1.toSerial(menuItems,menuFileName);
