@@ -128,7 +128,7 @@ public class DeliveryService implements IDeliveryServiceProcessing{
      * @return returns all the current orders
      */
     public Map<Order, Collection<MenuItem>> getOrders(){
-        assert orders != null && orders.size() > 0;
+        assert orders != null;
         return orders;
     }
 

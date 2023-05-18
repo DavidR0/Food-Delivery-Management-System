@@ -37,7 +37,7 @@ public interface IDeliveryServiceProcessing {
 
     /**
      * @pre
-     * @post Map<Order, Collection<MenuItem>> != null && Map<Order, Collection<MenuItem>>.size() > 0
+     * @post Map<Order, Collection<MenuItem>> != null
      * */
     Map<Order, Collection<MenuItem>> getOrders();
 }

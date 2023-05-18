@@ -29,6 +29,10 @@ sourceSets {
     }
 }
 
+run {
+    enableAssertions = true
+}
+
 test {
     useJUnitPlatform()
 }
